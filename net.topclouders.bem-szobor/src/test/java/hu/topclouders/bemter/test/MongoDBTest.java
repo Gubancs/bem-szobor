@@ -17,7 +17,6 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations = "/mongodb-context.xml")
 public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
-	
 	@Autowired
 	private VisitorRepository personRepository;
 
