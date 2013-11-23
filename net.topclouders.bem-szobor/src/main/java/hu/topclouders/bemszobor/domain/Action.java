@@ -1,6 +1,6 @@
-package hu.topclouders.bemter.domain;
+package hu.topclouders.bemszobor.domain;
 
-import hu.topclouders.bemter.enums.ActionType;
+import hu.topclouders.bemszobor.enums.ActionType;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +16,11 @@ public class Action extends MongoDocument {
 	private int value;
 
 	private ActionType actionType;
+
+	public Action(Visitor visitor, ActionType actionType) {
+		this.visitor = visitor;
+		this.actionType = actionType;
+	}
 
 	public Demonstration getDemonstration() {
 		return demonstration;

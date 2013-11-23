@@ -1,4 +1,4 @@
-package hu.topclouders.bemter.domain;
+package hu.topclouders.bemszobor.domain;
 
 import org.springframework.data.annotation.Id;
 

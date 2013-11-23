@@ -12,7 +12,7 @@
 	<!-- Default bean name is 'mongo' -->
 	<mongo:mongo id="mongo" host="localhost" port="27017" />
 	<!-- Mongo DB Factory -->
-	<mongo:db-factory id="mongoDbFactory" dbname="mongoit" mongo-ref="mongo" />
+	<mongo:db-factory id="mongoDbFactory" dbname="bemszobor" mongo-ref="mongo" />
 	<!-- Mongo Template -->
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />

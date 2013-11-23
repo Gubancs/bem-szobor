@@ -1,12 +1,22 @@
-package hu.topclouders.bemter.domain;
+package hu.topclouders.bemszobor.domain;
 
-public class Person extends MongoDocument {
+public class Person {
 
 	private String nick;
-	
+
 	private Gender gender;
 
 	private Integer age;
+
+	public Person() {
+	}
+
+	public Person(String nick, Gender gender, Integer age) {
+		super();
+		this.nick = nick;
+		this.gender = gender;
+		this.age = age;
+	}
 
 	public static enum Gender {
 		MALE, FEMALE

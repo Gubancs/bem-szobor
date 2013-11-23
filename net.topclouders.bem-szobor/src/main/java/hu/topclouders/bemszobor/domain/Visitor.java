@@ -1,6 +1,6 @@
-package hu.topclouders.bemter.domain;
+package hu.topclouders.bemszobor.domain;
 
-import hu.topclouders.bemter.enums.ActionType;
+import hu.topclouders.bemszobor.enums.ActionType;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Visitor extends MongoDocument {
 
 	private Demonstration demonstration;
-	
+
 	private String uuid;
 
 	private Person person;

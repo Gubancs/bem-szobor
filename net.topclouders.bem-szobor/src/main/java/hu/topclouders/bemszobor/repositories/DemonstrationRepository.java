@@ -1,6 +1,6 @@
-package hu.topclouders.bemter.repositories;
+package hu.topclouders.bemszobor.repositories;
 
-import hu.topclouders.bemter.domain.Demonstration;
+import hu.topclouders.bemszobor.domain.Demonstration;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
