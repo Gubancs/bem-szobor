@@ -3,6 +3,7 @@ package hu.topclouders.bemszobor.test;
 import hu.topclouders.bemszobor.dao.IActionRepository;
 import hu.topclouders.bemszobor.dao.IProtestRepository;
 import hu.topclouders.bemszobor.dao.IVisitorRepository;
+import hu.topclouders.bemszobor.domain.Action;
 import hu.topclouders.bemszobor.domain.Person;
 import hu.topclouders.bemszobor.domain.Person.Gender;
 import hu.topclouders.bemszobor.domain.Protest;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-@ContextConfiguration(locations = "/mongodb-context.xml")
+@ContextConfiguration(locations = "/service-context.xml")
 public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
@@ -33,22 +35,25 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 	private IProtestRepository protestRepository;
 
 	@Autowired
-	private ProtestService protestService;
+	private IActionRepository actionRepository;
 
 	@Autowired
-	private IActionRepository actionRepository;
+	private ProtestService protestService;
 
 	private List<Protest> protests = new ArrayList<Protest>();
 
 	@BeforeClass
 	public void beforeClass() {
 
+		Map<Protest, Long> activeDemonstrations = protestService
+				.getActiveDemonstrations();
+
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, 3);
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -20);
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 
 			protests.add(createProtest("protest" + i, cal.getTime()));
 
@@ -85,7 +90,7 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 		Visitor visitor;
 
 		List<Visitor> visitors = new ArrayList<Visitor>();
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			visitor = new Visitor();
 			visitor.setActionType(ActionType.VISIT);
 			visitor.setCity("City_" + i);
@@ -99,6 +104,13 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 			visitorRepository.save(visitor);
 
+			Action action = new Action(visitor, ActionType.JOIN);
+			action.setDate(Calendar.getInstance().getTimeInMillis());
+			action.setProtest(demonstration);
+			action.setValue(1);
+
+			actionRepository.save(action);
+
 			visitors.add(visitor);
 		}
 
@@ -107,5 +119,6 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	@AfterClass
 	public void afterClass() {
+
 	}
 }

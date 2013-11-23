@@ -16,4 +16,6 @@
 
 	<context:component-scan base-package="hu.topclouders.bemszobor.controllers" />
 	<mvc:annotation-driven />
+
+
 </beans>

@@ -15,7 +15,7 @@ public class Action extends AbstractEntity {
 	private static final long serialVersionUID = -5820373980960232740L;
 
 	@ManyToOne
-	private Protest demonstration;
+	private Protest protest;
 
 	@ManyToOne
 	private Visitor visitor;
@@ -32,12 +32,12 @@ public class Action extends AbstractEntity {
 		this.actionType = actionType;
 	}
 
-	public Protest getDemonstration() {
-		return demonstration;
+	public Protest getProtest() {
+		return protest;
 	}
 
-	public void setDemonstration(Protest demonstration) {
-		this.demonstration = demonstration;
+	public void setProtest(Protest protest) {
+		this.protest = protest;
 	}
 
 	public Visitor getVisitor() {
