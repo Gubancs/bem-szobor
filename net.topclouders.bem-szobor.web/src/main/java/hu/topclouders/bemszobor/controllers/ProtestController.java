@@ -3,19 +3,16 @@ package hu.topclouders.bemszobor.controllers;
 import hu.topclouders.bemszobor.domain.Protest;
 import hu.topclouders.bemszobor.service.ProtestService;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProtestController {
 
+	private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 	@Autowired
 	private ProtestService protestService;
 
@@ -33,25 +31,30 @@ public class ProtestController {
 			IOException {
 		Map<Protest, Long> protests = protestService.getActiveDemonstrations();
 
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		StringWriter writer = new StringWriter();
 		JsonFactory jsonFactory = new JsonFactory();
-		JsonGenerator jsonGenerator = jsonFactory.createJsonGenerator(out);
+		JsonGenerator jsonGenerator = jsonFactory.createJsonGenerator(writer);
 		jsonGenerator.writeStartArray();
-		
+
+		SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+
 		for (Protest protest : protests.keySet()) {
 			jsonGenerator.writeStartObject();
-			jsonGenerator.writeStringField("protest", protest.getName());
-			jsonGenerator.writeStringField("protest", protest.getName());
-			jsonGenerator.writeNumberField("count", protests.get(protest));
+			jsonGenerator.writeNumberField("protest_id", protest.getId());
+			jsonGenerator.writeStringField("date",
+					sdf.format(protest.getStart()));
+			jsonGenerator.writeStringField("desc", protest.getName());
+			jsonGenerator.writeStringField("location", protest.getAddress());
+			jsonGenerator.writeNumberField("people", protests.get(protest));
 			jsonGenerator.writeEndObject();
 		}
-		
+
 		jsonGenerator.writeEndArray();
-		
+
 		jsonGenerator.flush();
 		jsonGenerator.close();
 
-		return new String(out.toByteArray());
+		return writer.toString();
 	}
 
 	@RequestMapping(value = "/protests/closed", method = RequestMethod.GET)
