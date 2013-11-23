@@ -54,6 +54,9 @@
 						<h1>
 							<a title="bem-szobor.net" href="index.html" id="logo">bem-szobor.net</a>
 						</h1>
+						<a class="btn btn-im btn-default" href="#" role="button">Tüntetek</a>
+
+						<a class="btn btn-im btn-default" href="#" role="button">Ellentüntetek</a>
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
@@ -148,135 +151,74 @@
 	<!-- Wrap the rest of the page in another container to center all the content. -->
 	<div class="container marketing">
 
-		<!-- Three columns of text below the carousel -->
-		<div class="row">
-			<div class="col-lg-4">
+		<div class="row featurette">
+			<div class="col-lg-3">
 
-				<h2>Kényelmes</h2>
-				<p style="text-align: justify">Kényelmesen, akár otthon fotelből
-					vehetsz részt ezentúl a virtuális térben szerveződött tünetéseken.
-					Fejezd ki nézeteid, szervezz tüntetést, invitáld meg ismerőseidet.
-					A bem-szobor.netet használhatod mobilról, tabletről, számítógépről,
-					a szolgáltatás használatához nem szükséges alkalmazást telepítened.</p>
+				<h2>Pillanatnyi</h2>
+
+				<div class="tab-pane" id="ftab2">
+					<div class="table-responsive">
+						<table class="table table-hover" id="tprotests2">
+							<thead>
+								<tr>
+									<th style="text-align: left"><b>Megnevezés</b></th>
+									<th style="text-align: right"><b>fő</b></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="text-align: left">Tüntetők</td>
+									<td style="text-align: right">29992</td>
+								</tr>
+								<tr>
+									<td style="text-align: left">Ellentüntetők</td>
+									<td style="text-align: right">1231</td>
+								</tr>
+								<tr>
+									<td style="text-align: left">Nézelődők</td>
+									<td style="text-align: right">12211</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th id="total" style="text-align: left">Összesen</th>
+									<td style="text-align: right">200</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
 			</div>
 			<!-- /.col-lg-4 -->
-			<div class="col-lg-4">
-				<h2>Regisztráció mentes</h2>
-				<p style="text-align: justify">A bem-szobor.net-en való
-					demonstrációk teljesen biztonságosak, nem kell félned semmilyen
-					attrocitástól. A tiltakozás teljesen névtelen, és semmilyen módon
-					nem tároljuk azonosításhoz szükséges információt. A tüntetéseken
-					való részvételhez nem kell regisztrálnod, egyszerűen csak
-					rákattintasz egy gombra, hogy a tüntetőkkel tartasz.</p>
 
+			<div class="col-lg-9">
+				<h2>Statisztika</h2>
+				<div class="table-responsive">
+					<div id="chartstat_div" style="width: 100%; height: 250;"></div>
+				</div>
 			</div>
-			<!-- /.col-lg-4 -->
-			<div class="col-lg-4">
 
-				<h2>Bárhonnan elérhető</h2>
-				<p style="text-align: justify">Rengeteg olyan esemény van az
-					életünkben, amelyen földrajzi, időbeli korlátok miatt nem tudunk
-					megjelenni. A bem-szobor.net szolgáltatásával egyetlen
-					demonstrációról sem kell lemondanod. Külföldről, belföldről
-					egyaránt elérhető a szolgáltatás, teljesen platform ész
-					eszközfüggetlenül használhatod, csak internet kell hozzá</p>
-			</div>
-			<!-- /.col-lg-4 -->
 		</div>
-		<!-- /.row -->
 		<hr id="protests">
+		<h2>Térkép</h2>
 		<br /> <br />
-		<div>
+		<div class="table-responsive">
 			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-				<li class="active"><a href="#ftab1" data-toggle="tab" id="d1"><b>Következő
-							demonstrációk</b></a></li>
-				<li><a href="#ftab2" data-toggle="tab" id="d2"><b>Folyamatban
-							levő demonstrációk</b></a></li>
-				<li><a href="#ftab3" data-toggle="tab" id="d3"><b>Befejeződött
-							demonstrációk</b></a></li>
+				<li class="active"><a href="#maptab1" data-toggle="tab"
+					id="lmap1"><b>Világtérkép</b></a></li>
+				<li><a href="#maptab2" data-toggle="tab" id="lmap2"><b>Magyarország</b></a></li>
 			</ul>
 
 
 			<div id="my-tab-content" class="tab-content">
-				<div class="tab-pane active" id="ftab1">
-					<br /> <br />
-
-					<div class="table-responsive">
-						<table class="table table-hover" id="tprotests1">
-							<thead>
-								<tr>
-									<th><b>Időpont</b></th>
-									<th><b>Megnevezés</b></th>
-									<th><b>Hely</b></th>
-									<th><b>Csatlakozók száma</b></th>
-								</tr>
-							</thead>
-							<tbody>
-
-								<tr>
-									<td>2012.31231</td>
-									<td>werq erqwerqw erq wer</td>
-									<td>wqerqwerqwer</td>
-									<td>23423</td>
-								</tr>
-
-							</tbody>
-						</table>
-					</div>
+				<div class="tab-pane active" id="maptab1">
+					<div id="chart_div" style="width: 100%; height: 500px;"></div>
 				</div>
 
-				<div class="tab-pane" id="ftab2">
-					<br /> <br />
-					<div class="table-responsive">
-					<table class="table table-hover" id="tprotests2">
-						<thead>
-							<tr>
-								<th><b>Időpont</b></th>
-								<th><b>Megnevezés</b></th>
-								<th><b>Hely</b></th>
-								<th><b>Tüntetők száma</b></th>
-							</tr>
-						</thead>
-						<tbody>
-
-							<tr>
-								<td>2012.31231</td>
-								<td>werq erqwerqw erq wer</td>
-								<td>wqerqwerqwer</td>
-								<td>23423</td>
-							</tr>
-
-						</tbody>
-					</table>
-					</div>
-
+				<div class="tab-pane" id="maptab2">
+					<div id="chart_div2" style="width: 100%; height: 500px;"></div>
 				</div>
-				<div class="tab-pane" id="ftab3">
-					<br /> <br />
-					<div class="table-responsive">
-						<table class="table table-hover" id="tprotests3">
-						<thead>
-							<tr>
-								<th><b>Időpont</b></th>
-								<th><b>Megnevezés</b></th>
-								<th><b>Hely</b></th>
-								<th><b>Maximális tüntetőszám</b></th>
-							</tr>
-						</thead>
-						<tbody>
 
-							<tr>
-								<td>2012.31231</td>
-								<td>werq erqwerqw erq wer</td>
-								<td>wqerqwerqwer</td>
-								<td>23423</td>
-							</tr>
-
-						</tbody>
-					</table>
-					</div>
-
-				</div>
 			</div>
 		</div>
 		<br /> <br /> <br /> <br />
@@ -293,5 +235,96 @@
 	<script src="./js/bootstrap.min.js"></script>
 	<script src="./js/holder.js"></script>
 	<script src="./js/bem.js"></script>
+	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	<script type='text/javascript'>
+		google.load('visualization', '1', {
+			'packages' : [ 'geomap' ]
+		});
+		google.setOnLoadCallback(drawMarkersMap);
+
+		function drawMarkersMap() {
+			var data = google.visualization.arrayToDataTable([
+					[ 'Country', 'Valami' ], [ 'England', 2761477 ],
+					[ 'Hungary', 2761477 ], [ 'Austria', 959574 ],
+					[ 'Germany', 907563 ], [ 'Finnland', 655875 ],
+					[ 'Brazil', 655875 ], [ 'Croatia', 655875 ] ]);
+
+			/*
+			 var data = google.visualization.arrayToDataTable([
+			 ['Country',   'Popularity' ],
+			 ['DE',      2761477],
+			 ['HU',     2761477],
+			 ['BR',    959574],
+			 ['AT',     907563],
+			 ['NL',   655875]
+			 ]);*/
+
+			var options = {
+				language : "hu",
+				region : '150',
+				displayMode : 'region',
+				colorAxis : {
+					colors : [ 'yellow', 'red' ]
+				}
+			};
+
+			var chart = new google.visualization.GeoChart(document
+					.getElementById('chart_div'));
+			chart.draw(data, options);
+
+			google.visualization.events.addListener(chart, 'regionClick',
+					function() {
+						var selection = chart.getSelection();
+
+						var data = google.visualization
+								.arrayToDataTable([ [ 'City', 'Valami' ],
+										[ 'Budapest', 2761477 ],
+										[ 'Debrecen', 2761477 ],
+										[ 'Esztergom', 959574 ],
+										[ 'Békéscsaba', 907563 ],
+										[ 'Körmend', 655875 ],
+										[ 'Komló', 655875 ],
+										[ 'Zalaegerszeg', 655875 ],
+										[ 'Pilismarót', 345345 ],
+										[ 'Borota', 2345345 ] ]);
+
+						var options = {
+							language : "hu",
+							region : 'HU',
+							displayMode : 'markers',
+							colorAxis : {
+								colors : [ 'yellow', 'red' ]
+							}
+						};
+
+						chart.draw(data, options);
+
+					});
+
+		};
+	</script>
+
+	<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chartstat_div'));
+        chart.draw(data, options);
+      }
+    </script>
 </body>
 </html>
