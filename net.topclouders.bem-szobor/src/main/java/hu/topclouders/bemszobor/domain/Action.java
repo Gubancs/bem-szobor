@@ -2,19 +2,29 @@ package hu.topclouders.bemszobor.domain;
 
 import hu.topclouders.bemszobor.enums.ActionType;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 
-@Document
-public class Action extends MongoDocument {
+@Entity
+public class Action extends AbstractEntity {
 
-	private Demonstration demonstration;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5820373980960232740L;
 
+	@ManyToOne
+	private Protest demonstration;
+
+	@ManyToOne
 	private Visitor visitor;
 
 	private long date;
 
 	private int value;
 
+	@Enumerated
 	private ActionType actionType;
 
 	public Action(Visitor visitor, ActionType actionType) {
@@ -22,11 +32,11 @@ public class Action extends MongoDocument {
 		this.actionType = actionType;
 	}
 
-	public Demonstration getDemonstration() {
+	public Protest getDemonstration() {
 		return demonstration;
 	}
 
-	public void setDemonstration(Demonstration demonstration) {
+	public void setDemonstration(Protest demonstration) {
 		this.demonstration = demonstration;
 	}
 

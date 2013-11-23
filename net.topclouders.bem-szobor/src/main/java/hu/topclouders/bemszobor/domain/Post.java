@@ -1,6 +1,16 @@
 package hu.topclouders.bemszobor.domain;
 
-public class Post {
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class Post implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8829671797921415807L;
 
 	private String title;
 

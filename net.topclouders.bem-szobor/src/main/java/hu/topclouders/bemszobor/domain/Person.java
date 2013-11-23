@@ -1,9 +1,21 @@
 package hu.topclouders.bemszobor.domain;
 
-public class Person {
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+import javax.persistence.Enumerated;
+
+@Embeddable
+public class Person implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6880235214137199827L;
 
 	private String nick;
 
+	@Enumerated
 	private Gender gender;
 
 	private Integer age;

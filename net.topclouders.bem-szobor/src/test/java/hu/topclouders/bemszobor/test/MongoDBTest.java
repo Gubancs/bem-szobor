@@ -1,13 +1,14 @@
 package hu.topclouders.bemszobor.test;
 
-import hu.topclouders.bemszobor.domain.Demonstration;
+import hu.topclouders.bemszobor.dao.IActionRepository;
+import hu.topclouders.bemszobor.dao.IProtestRepository;
+import hu.topclouders.bemszobor.dao.IVisitorRepository;
 import hu.topclouders.bemszobor.domain.Person;
 import hu.topclouders.bemszobor.domain.Person.Gender;
+import hu.topclouders.bemszobor.domain.Protest;
 import hu.topclouders.bemszobor.domain.Visitor;
 import hu.topclouders.bemszobor.enums.ActionType;
-import hu.topclouders.bemszobor.repositories.ActionRepository;
-import hu.topclouders.bemszobor.repositories.DemonstrationRepository;
-import hu.topclouders.bemszobor.repositories.VisitorRepository;
+import hu.topclouders.bemszobor.service.ProtestService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,15 +27,18 @@ import org.testng.annotations.Test;
 public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
-	private VisitorRepository visitorRepository;
+	private IVisitorRepository visitorRepository;
 
 	@Autowired
-	private DemonstrationRepository demonstrationRepository;
+	private IProtestRepository protestRepository;
 
 	@Autowired
-	private ActionRepository actionRepository;
+	private ProtestService protestService;
 
-	private List<Demonstration> demonstrations = new ArrayList<Demonstration>();
+	@Autowired
+	private IActionRepository actionRepository;
+
+	private List<Protest> protests = new ArrayList<Protest>();
 
 	@BeforeClass
 	public void beforeClass() {
@@ -46,38 +50,38 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 		cal.add(Calendar.DATE, -20);
 		for (int i = 0; i < 100; i++) {
 
-			demonstrations.add(createDemonstration("demonstration" + i,
-					cal.getTime()));
+			protests.add(createProtest("protest" + i, cal.getTime()));
 
 			cal.add(Calendar.DATE, 1);
 		}
 
 	}
 
-	private Demonstration createDemonstration(String name, Date start) {
-		Demonstration demonstration = new Demonstration();
-		demonstration.setEmail("ingatlanmarket.net@gmail.com");
-		demonstration.setOrganizer("Istvan Benedek");
-		demonstration.setStart(start);
-		demonstration.setAddress("Békéscsaba");
-		demonstration.setName(name);
+	private Protest createProtest(String name, Date start) {
+		Protest protest = new Protest();
+		protest.setEmail("ingatlanmarket.net@gmail.com");
+		protest.setOrganizer("Istvan Benedek");
+		protest.setStart(start);
+		protest.setAddress("Békéscsaba");
+		protest.setName(name);
+		protest.setCreated(start);
 
-		return demonstrationRepository.save(demonstration);
+		return protestRepository.save(protest);
 	}
 
 	@Test
 	public void mongoDbTest() {
 
-		List<Demonstration> demonstrations = demonstrationRepository.findAll();
+		List<Protest> demonstrations = protestRepository.findAll();
 
-		for (Demonstration demonstration : demonstrations) {
+		for (Protest demonstration : demonstrations) {
 
 			createVisitors(demonstration);
 		}
 
 	}
 
-	private List<Visitor> createVisitors(Demonstration demonstration) {
+	private List<Visitor> createVisitors(Protest demonstration) {
 		Visitor visitor;
 
 		List<Visitor> visitors = new ArrayList<Visitor>();
@@ -89,9 +93,9 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 			visitor.setCountry("Country_" + i);
 			visitor.setJoinDate(Calendar.getInstance().getTime());
 			visitor.setPerson(new Person("Person_" + i, Gender.MALE, 25));
-			visitor.setDemonstration(demonstrations.get(0));
+			visitor.setProtest(protests.get(0));
 			visitor.setUuid(UUID.randomUUID().toString());
-			visitor.setDemonstration(demonstration);
+			visitor.setProtest(demonstration);
 
 			visitorRepository.save(visitor);
 

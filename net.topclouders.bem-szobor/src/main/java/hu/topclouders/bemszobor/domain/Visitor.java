@@ -4,19 +4,30 @@ import hu.topclouders.bemszobor.enums.ActionType;
 
 import java.util.Date;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 
-@Document
-public class Visitor extends MongoDocument {
+@Entity
+public class Visitor extends AbstractEntity {
 
-	private Demonstration demonstration;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8288261956764742517L;
+
+	@ManyToOne
+	private Protest protest;
 
 	private String uuid;
 
+	@Embedded
 	private Person person;
 
 	private Date joinDate;
 
+	@Enumerated
 	private ActionType actionType;
 
 	private boolean active = true;
@@ -39,12 +50,12 @@ public class Visitor extends MongoDocument {
 		this.uuid = uuid;
 	}
 
-	public Demonstration getDemonstration() {
-		return demonstration;
+	public Protest getProtest() {
+		return protest;
 	}
 
-	public void setDemonstration(Demonstration demonstration) {
-		this.demonstration = demonstration;
+	public void setProtest(Protest protest) {
+		this.protest = protest;
 	}
 
 	public Person getPerson() {

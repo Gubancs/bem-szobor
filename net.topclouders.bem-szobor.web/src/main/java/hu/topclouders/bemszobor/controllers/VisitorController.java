@@ -1,8 +1,8 @@
-package hu.topclouders.bemszobor.services;
+package hu.topclouders.bemszobor.controllers;
 
+import hu.topclouders.bemszobor.dao.IVisitorRepository;
 import hu.topclouders.bemszobor.domain.QVisitor;
 import hu.topclouders.bemszobor.domain.Visitor;
-import hu.topclouders.bemszobor.repositories.VisitorRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,19 +20,19 @@ import com.mysema.query.types.Predicate;
 public class VisitorController {
 
 	@Autowired
-	private VisitorRepository visitorRepository;
+	private IVisitorRepository visitorRepository;
 
-	@RequestMapping(value = "/demonstrators/${demonstration}", method = RequestMethod.GET)
+	@RequestMapping(value = "/protests/{protest}", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Integer> getDemonstratorsGlobal(
-			@RequestParam(value = "demonstration", required = true) String demonstration) {
+			@RequestParam(value = "demonstration", required = true) String protest) {
 
 		QVisitor qVisitor = QVisitor.visitor;
-		Predicate predicate = qVisitor.demonstration.name.eq(demonstration);
+		Predicate predicate = qVisitor.protest.name.eq(protest);
 
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		Integer counter;
-		for (Visitor visitor : visitorRepository.findAll(predicate)) {
+		for (Visitor visitor : visitorRepository.findAll()) {
 
 			counter = result.get(visitor.getCountry());
 
@@ -46,20 +46,20 @@ public class VisitorController {
 		return result;
 	}
 
-	@RequestMapping(value = "/demonstrators/${demonstration}/${country}", method = RequestMethod.GET)
+	@RequestMapping(value = "/protests/{protest}/{country}", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Integer> getDemonstrators(
-			@RequestParam(value = "demonstration", required = true) String demonstration,
+			@RequestParam(value = "protest", required = true) String protest,
 			@RequestParam(value = "country", required = true) String country) {
 
 		QVisitor qVisitor = QVisitor.visitor;
-		Predicate predicate = qVisitor.demonstration.name.eq(demonstration)
-				.and(qVisitor.country.eq(country));
+		Predicate predicate = qVisitor.protest.name.eq(protest).and(
+				qVisitor.country.eq(country));
 
 		Map<String, Integer> result = new HashMap<String, Integer>();
 
 		Integer counter;
-		for (Visitor visitor : visitorRepository.findAll(predicate)) {
+		for (Visitor visitor : visitorRepository.findAll()) {
 
 			counter = result.get(visitor.getCity());
 			counter = counter == null ? 1 : counter++;

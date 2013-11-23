@@ -3,10 +3,17 @@ package hu.topclouders.bemszobor.domain;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 
-@Document
-public class Demonstration extends MongoDocument {
+@Entity
+public class Protest extends AbstractEntity {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2432777353429026757L;
 
 	private String name;
 
@@ -24,6 +31,8 @@ public class Demonstration extends MongoDocument {
 
 	private String address;
 
+	@CollectionTable
+	@ElementCollection
 	private List<Post> posts;
 
 	public String getEmail() {
