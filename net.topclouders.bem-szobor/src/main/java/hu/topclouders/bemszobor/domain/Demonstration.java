@@ -8,16 +8,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Demonstration extends MongoDocument {
 
+	private String name;
+
 	private String email;
 
 	private String organizer;
+
+	private Date created;
 
 	private Date start;
 
 	private Date end;
 
+	private Date closed;
+
 	private String address;
-	
+
 	private List<Post> posts;
 
 	public String getEmail() {
@@ -67,4 +73,29 @@ public class Demonstration extends MongoDocument {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public Date getClosed() {
+		return closed;
+	}
+
+	public void setClosed(Date closed) {
+		this.closed = closed;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

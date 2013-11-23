@@ -17,7 +17,7 @@
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
-	<mongo:repositories base-package="hu.topclouders.bemter.repositories" />
+	<mongo:repositories base-package="hu.topclouders.bemszobor.repositories" />
 
 
 </beans>
