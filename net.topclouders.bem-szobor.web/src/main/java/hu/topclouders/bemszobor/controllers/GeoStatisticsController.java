@@ -59,6 +59,10 @@ public class GeoStatisticsController {
 			countries = geoService.getCitiesByProtestIdAndCountryCode(
 					protestId, countryCode);
 		} else {
+
+			if (actionType == null) {
+				return "";
+			}
 			countries = geoService.getCitiesByProtestIdAndCountryCodeAndType(
 					protestId, countryCode, actionType);
 		}
