@@ -12,9 +12,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Visitor extends AbstractEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8288261956764742517L;
 
 	@ManyToOne
@@ -32,15 +29,8 @@ public class Visitor extends AbstractEntity {
 
 	private boolean active = true;
 
-	private double latitude;
-
-	private double longitude;
-
-	private String country;
-
-	private String region;
-
-	private String city;
+	@ManyToOne
+	private Location location;
 
 	public String getUuid() {
 		return uuid;
@@ -90,44 +80,12 @@ public class Visitor extends AbstractEntity {
 		this.active = active;
 	}
 
-	public double getLatitude() {
-		return latitude;
+	public Location getLocation() {
+		return location;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 }
