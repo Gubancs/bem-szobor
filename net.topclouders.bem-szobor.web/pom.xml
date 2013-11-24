@@ -36,9 +36,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>
-		 bemszobor
-		</finalName>
+		<finalName>bemszobor</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

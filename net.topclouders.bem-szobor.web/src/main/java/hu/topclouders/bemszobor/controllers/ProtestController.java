@@ -6,7 +6,6 @@ import hu.topclouders.bemszobor.service.ProtestService;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonFactory;
@@ -21,18 +20,43 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProtestController {
 
-	private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
+	private static final String DEFAULT_DATE_FORMAT = "yyyy.MM.dd. HH:mm z";
+
 	@Autowired
 	private ProtestService protestService;
+
+	private JsonFactory jsonFactory = new JsonFactory();
 
 	@RequestMapping(value = "/protests/active", method = RequestMethod.GET)
 	@ResponseBody
 	public String getActiveProtests() throws JsonGenerationException,
 			IOException {
-		Map<Protest, Long> protests = protestService.getActiveDemonstrations();
+		Map<Protest, Long> protests = protestService.getActiveDemonstrators();
 
+		return toJson(protests);
+	}
+
+	@RequestMapping(value = "/protests/closed", method = RequestMethod.GET)
+	@ResponseBody
+	public String getClosedProtests() throws IOException {
+
+		Map<Protest, Long> protests = protestService.getClosedProtests();
+
+		return toJson(protests);
+	}
+
+	@RequestMapping(value = "/protests/inprogress", method = RequestMethod.GET)
+	@ResponseBody
+	public String getInProgessProtests() throws IOException {
+		Map<Protest, Long> protests = protestService.getInProgressProtests();
+
+		return toJson(protests);
+
+	}
+
+	private String toJson(Map<Protest, Long> protests) throws IOException,
+			JsonGenerationException {
 		StringWriter writer = new StringWriter();
-		JsonFactory jsonFactory = new JsonFactory();
 		JsonGenerator jsonGenerator = jsonFactory.createJsonGenerator(writer);
 		jsonGenerator.writeStartArray();
 
@@ -53,26 +77,6 @@ public class ProtestController {
 
 		jsonGenerator.flush();
 		jsonGenerator.close();
-
 		return writer.toString();
-	}
-
-	@RequestMapping(value = "/protests/closed", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Protest> getClosedProtests() {
-
-		List<Protest> protests = protestService.getClosedProtests();
-
-		return protests;
-	}
-
-	@RequestMapping(value = "/protests/inprogress", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Protest> getInProgessProtests() {
-
-		List<Protest> protests = protestService.getInProgressProtests();
-
-		return protests;
-
 	}
 }

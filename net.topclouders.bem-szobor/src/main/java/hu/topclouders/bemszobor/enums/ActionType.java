@@ -1,5 +1,5 @@
 package hu.topclouders.bemszobor.enums;
 
 public enum ActionType {
-	DEMONSTRATOR, ELLENTUNTETO, VISIT, JOIN;
+	DEMONSTRATOR, COUNTER_DEMONSTRATOR, VISITOR, JOIN;
 }

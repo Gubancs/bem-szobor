@@ -46,13 +46,13 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 	public void beforeClass() {
 
 		Map<Protest, Long> activeDemonstrations = protestService
-				.getActiveDemonstrations();
+				.getActiveDemonstrators();
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, 3);
 
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -20);
+		cal.add(Calendar.DATE, -4);
 		for (int i = 0; i < 10; i++) {
 
 			protests.add(createProtest("protest" + i, cal.getTime()));
@@ -90,9 +90,9 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 		Visitor visitor;
 
 		List<Visitor> visitors = new ArrayList<Visitor>();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			visitor = new Visitor();
-			visitor.setActionType(ActionType.VISIT);
+			visitor.setActionType(ActionType.VISITOR);
 			visitor.setCity("City_" + i);
 			visitor.setRegion("Region_" + i);
 			visitor.setCountry("Country_" + i);
@@ -108,6 +108,20 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 			action.setDate(Calendar.getInstance().getTimeInMillis());
 			action.setProtest(demonstration);
 			action.setValue(1);
+
+			actionRepository.save(action);
+
+			action = new Action(visitor, ActionType.DEMONSTRATOR);
+			action.setDate(Calendar.getInstance().getTimeInMillis());
+			action.setProtest(demonstration);
+			action.setValue(1);
+
+			actionRepository.save(action);
+
+			action = new Action(visitor, ActionType.DEMONSTRATOR);
+			action.setDate(Calendar.getInstance().getTimeInMillis());
+			action.setProtest(demonstration);
+			action.setValue(-1);
 
 			actionRepository.save(action);
 

@@ -9,9 +9,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Action extends AbstractEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5820373980960232740L;
 
 	@ManyToOne
@@ -26,6 +23,9 @@ public class Action extends AbstractEntity {
 
 	@Enumerated
 	private ActionType actionType;
+	
+	public Action() {
+	}
 
 	public Action(Visitor visitor, ActionType actionType) {
 		this.visitor = visitor;
