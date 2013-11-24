@@ -1,22 +1,23 @@
 package hu.topclouders.bemszobor.test;
 
 import hu.topclouders.bemszobor.dao.IActionRepository;
+import hu.topclouders.bemszobor.dao.ILocationRepository;
 import hu.topclouders.bemszobor.dao.IProtestRepository;
-import hu.topclouders.bemszobor.dao.IVisitorRepository;
 import hu.topclouders.bemszobor.domain.Action;
+import hu.topclouders.bemszobor.domain.Location;
 import hu.topclouders.bemszobor.domain.Person;
 import hu.topclouders.bemszobor.domain.Person.Gender;
 import hu.topclouders.bemszobor.domain.Protest;
 import hu.topclouders.bemszobor.domain.Visitor;
 import hu.topclouders.bemszobor.enums.ActionType;
 import hu.topclouders.bemszobor.service.ProtestService;
+import hu.topclouders.bemszobor.service.RegistrationService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,10 +30,13 @@ import org.testng.annotations.Test;
 public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
-	private IVisitorRepository visitorRepository;
+	private RegistrationService registrationService;
 
 	@Autowired
 	private IProtestRepository protestRepository;
+
+	@Autowired
+	private ILocationRepository locationDao;
 
 	@Autowired
 	private IActionRepository actionRepository;
@@ -86,41 +90,46 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	}
 
-	private List<Visitor> createVisitors(Protest demonstration) {
-		Visitor visitor;
+	private List<Visitor> createVisitors(Protest protest) {
 
+		Person person;
 		List<Visitor> visitors = new ArrayList<Visitor>();
+		Location location = new Location();
 		for (int i = 0; i < 10; i++) {
-			visitor = new Visitor();
-			visitor.setActionType(ActionType.VISITOR);
-			visitor.setCity("City_" + i);
-			visitor.setRegion("Region_" + i);
-			visitor.setCountry("Country_" + i);
-			visitor.setJoinDate(Calendar.getInstance().getTime());
-			visitor.setPerson(new Person("Person_" + i, Gender.MALE, 25));
-			visitor.setProtest(protests.get(0));
-			visitor.setUuid(UUID.randomUUID().toString());
-			visitor.setProtest(demonstration);
 
-			visitorRepository.save(visitor);
+			person = new Person("Person_" + i, i % 3 == 0 ? Gender.MALE
+					: Gender.FEMALE, 25);
+
+			location = new Location();
+			location.setCity("City_" + i % 2);
+			location.setRegion("Region_" + i % 2);
+			location.setCountry("Country_" + i % 2);
+			location.setLatitude(Math.random() * 10 + 1);
+			location.setLongitude(Math.random() * 10 + 1);
+
+			location = locationDao.save(location);
+
+			Visitor visitor = registrationService.registerVisitor(protest
+					.getId(), i % 2 == 0 ? ActionType.DEMONSTRATOR
+					: ActionType.COUNTER_DEMONSTRATOR, person, location);
 
 			Action action = new Action(visitor, ActionType.JOIN);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
-			action.setProtest(demonstration);
+			action.setProtest(protest);
 			action.setValue(1);
 
 			actionRepository.save(action);
 
 			action = new Action(visitor, ActionType.DEMONSTRATOR);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
-			action.setProtest(demonstration);
+			action.setProtest(protest);
 			action.setValue(1);
 
 			actionRepository.save(action);
 
 			action = new Action(visitor, ActionType.DEMONSTRATOR);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
-			action.setProtest(demonstration);
+			action.setProtest(protest);
 			action.setValue(-1);
 
 			actionRepository.save(action);
@@ -134,5 +143,20 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 	@AfterClass
 	public void afterClass() {
 
+		int index;
+		for (Protest protest : protests) {
+			index = protests.indexOf(protest);
+
+			if (index % 2 == 0) {
+				protest.setEnd(Calendar.getInstance().getTime());
+			}
+
+			if (index % 2 == 1) {
+				protest.setEnd(Calendar.getInstance().getTime());
+				protest.setClosed(Calendar.getInstance().getTime());
+			}
+
+			protestRepository.update(protest);
+		}
 	}
 }

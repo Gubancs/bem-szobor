@@ -14,7 +14,7 @@
 
 	<import resource="classpath:/service-context.xml" />
 
-	<context:component-scan base-package="hu.topclouders.bemszobor.controllers" />
+	<context:component-scan base-package="hu.topclouders.bemszobor.controllers, hu.topclouders.bemszobor.beans" />
 	<mvc:annotation-driven />
 
 

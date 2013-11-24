@@ -14,6 +14,8 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
 import com.mysema.query.Tuple;
@@ -21,6 +23,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Projections;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class ProtestService {
 
 	public static final Integer PAGE_LIMIT = 10;

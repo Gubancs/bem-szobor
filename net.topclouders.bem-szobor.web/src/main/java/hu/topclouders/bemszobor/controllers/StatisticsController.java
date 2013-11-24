@@ -51,7 +51,6 @@ public class StatisticsController {
 		StringWriter writer = new StringWriter();
 		JsonGenerator gen = jsonFactory.createJsonGenerator(writer);
 
-		gen.writeStartArray();
 		gen.writeStartObject();
 		ActionTypeSerializer actionTypeSerializer = new ActionTypeSerializer();
 		for (ActionType actionType : totalStatistic.keySet()) {
@@ -61,7 +60,6 @@ public class StatisticsController {
 
 		}
 		gen.writeEndObject();
-		gen.writeEndArray();
 
 		gen.flush();
 		gen.close();

@@ -6,11 +6,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.Enumerated;
 
 @Embeddable
-public class Person implements Serializable{
+public class Person implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6880235214137199827L;
 
 	private String nick;

@@ -2,7 +2,7 @@ package hu.topclouders.bemszobor.controllers;
 
 import hu.topclouders.bemszobor.enums.ActionType;
 import hu.topclouders.bemszobor.json.mapper.ActionTypeSerializer;
-import hu.topclouders.bemszobor.service.GeoService;
+import hu.topclouders.bemszobor.service.GeoStatisticService;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GeoStatisticsController {
 
 	@Autowired
-	private GeoService geoService;
+	private GeoStatisticService geoService;
 
 	private JsonFactory jsonFactory = new JsonFactory();
 
@@ -59,6 +59,10 @@ public class GeoStatisticsController {
 			countries = geoService.getCitiesByProtestIdAndCountryCode(
 					protestId, countryCode);
 		} else {
+
+			if (actionType == null) {
+				return "";
+			}
 			countries = geoService.getCitiesByProtestIdAndCountryCodeAndType(
 					protestId, countryCode, actionType);
 		}
@@ -71,13 +75,11 @@ public class GeoStatisticsController {
 		StringWriter writer = new StringWriter();
 		JsonGenerator jsonGenerator = jsonFactory.createJsonGenerator(writer);
 		jsonGenerator.writeStartArray();
-
+		jsonGenerator.writeStartObject();
 		for (String country : countries.keySet()) {
-			jsonGenerator.writeStartObject();
-			jsonGenerator.writeStringField("c", country);
-			jsonGenerator.writeNumberField("p", countries.get(country));
-			jsonGenerator.writeEndObject();
+			jsonGenerator.writeNumberField(country, countries.get(country));
 		}
+		jsonGenerator.writeEndObject();
 
 		jsonGenerator.writeEndArray();
 

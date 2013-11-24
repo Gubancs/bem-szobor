@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Maps;
@@ -18,6 +20,7 @@ import com.mysema.query.Tuple;
 import com.mysema.query.jpa.impl.JPAQuery;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class StatisticService {
 
 	@PersistenceContext
@@ -33,6 +36,7 @@ public class StatisticService {
 				.from(qVisitor)
 				.where(qVisitor.protest.id.eq(protestId))
 				.groupBy(qVisitor.person.age, qVisitor.person.gender)
+				.orderBy(qVisitor.person.age.asc())
 				.list(qVisitor.person.age, qVisitor.person.gender,
 						qVisitor.count());
 
@@ -51,6 +55,7 @@ public class StatisticService {
 				.where(qVisitor.protest.id.eq(protestId).and(
 						qVisitor.actionType.eq(actionType)))
 				.groupBy(qVisitor.person.age, qVisitor.person.gender)
+				.orderBy(qVisitor.person.age.asc())
 				.list(qVisitor.person.age, qVisitor.person.gender,
 						qVisitor.count());
 
