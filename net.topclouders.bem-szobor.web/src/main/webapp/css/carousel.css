@@ -30,7 +30,6 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 20000;
 }
 
 /* Flip around the padding for proper display in narrow viewports */
@@ -91,8 +90,10 @@ body {
    
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
+	left:26%;
+	right: 10%;
   padding: 0;
-  bottom: 50px;
+  bottom: 60px;
   text-align: left;
   vertical-align: middle;
 }
@@ -192,7 +193,7 @@ body {
 	
 
 	.carousel , .carousel .item {
-		height: 500px ! important;
+		height: 550px ! important;
 	}
 	
 	.bemimage{
