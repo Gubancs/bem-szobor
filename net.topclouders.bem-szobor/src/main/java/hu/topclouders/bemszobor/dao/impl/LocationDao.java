@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.dao.impl;
 
-import hu.topclouders.bemszobor.dao.ILocationRepository;
+import hu.topclouders.bemszobor.dao.ILocationDao;
 import hu.topclouders.bemszobor.domain.Location;
 import hu.topclouders.bemszobor.domain.QLocation;
 
@@ -10,7 +10,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 
 @Repository
 public class LocationDao extends AbstractJpaDao<Location> implements
-		ILocationRepository {
+		ILocationDao {
 
 	@Override
 	public Location findLocationByCountryAndCity(String country, String city) {

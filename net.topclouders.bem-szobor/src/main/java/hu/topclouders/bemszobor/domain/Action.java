@@ -6,13 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
+import org.springframework.util.Assert;
+
 @Entity
 public class Action extends AbstractEntity {
 
 	private static final long serialVersionUID = -5820373980960232740L;
 
 	@ManyToOne
-	private Demonstration protest;
+	private Demonstration demonstration;
 
 	@ManyToOne
 	private Visitor visitor;
@@ -23,21 +25,24 @@ public class Action extends AbstractEntity {
 
 	@Enumerated
 	private ActionType actionType;
-	
+
 	public Action() {
 	}
 
-	public Action(Visitor visitor, ActionType actionType) {
+	public Action(Visitor visitor) {
+		Assert.notNull(visitor);
+		Assert.notNull(visitor.getActionType());
+
 		this.visitor = visitor;
-		this.actionType = actionType;
+		this.actionType = visitor.getActionType();
 	}
 
-	public Demonstration getProtest() {
-		return protest;
+	public Demonstration getDemonstration() {
+		return demonstration;
 	}
 
-	public void setProtest(Demonstration protest) {
-		this.protest = protest;
+	public void setDemonstration(Demonstration demonstration) {
+		this.demonstration = demonstration;
 	}
 
 	public Visitor getVisitor() {

@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.dao.impl;
 
-import hu.topclouders.bemszobor.dao.IVisitorRepository;
+import hu.topclouders.bemszobor.dao.IVisitorDao;
 import hu.topclouders.bemszobor.domain.QVisitor;
 import hu.topclouders.bemszobor.domain.Visitor;
 import hu.topclouders.bemszobor.enums.ActionType;
@@ -14,27 +14,27 @@ import com.mysema.query.jpa.impl.JPAQuery;
 
 @Repository
 public class VisitorDao extends AbstractJpaDao<Visitor> implements
-		IVisitorRepository {
+		IVisitorDao {
 
 	@Override
-	public List<Tuple> findCountriesByProtestId(Long protestId) {
+	public List<Tuple> findCountriesByProtestId(Long demonstrationId) {
 		QVisitor qVisitor = QVisitor.visitor;
 
 		return new JPAQuery(getEntityManager()).from(qVisitor)
-				.where(qVisitor.protest.id.eq(protestId))
+				.where(qVisitor.demonstration.id.eq(demonstrationId))
 				.groupBy(qVisitor.location.country)
 				.list(qVisitor.location.country, qVisitor.count());
 
 	}
 
 	@Override
-	public List<Tuple> getCountriesByProtestIdAndActionType(Long protestId,
+	public List<Tuple> getCountriesByProtestIdAndActionType(Long demonstrationId,
 			ActionType actionType) {
 		QVisitor qVisitor = QVisitor.visitor;
 
 		return new JPAQuery(getEntityManager())
 				.from(qVisitor)
-				.where(qVisitor.protest.id.eq(protestId).and(
+				.where(qVisitor.demonstration.id.eq(demonstrationId).and(
 						qVisitor.actionType.eq(actionType)))
 				.groupBy(qVisitor.location.country)
 				.list(qVisitor.location.country, qVisitor.count());
@@ -42,12 +42,12 @@ public class VisitorDao extends AbstractJpaDao<Visitor> implements
 	}
 
 	@Override
-	public List<Tuple> findCitiesByProtestIdAndCountryCode(Long protestId,
+	public List<Tuple> findCitiesByProtestIdAndCountryCode(Long demonstrationId,
 			String countryCode) {
 		QVisitor qVisitor = QVisitor.visitor;
 		return new JPAQuery(getEntityManager())
 				.from(qVisitor)
-				.where(qVisitor.protest.id.eq(protestId).and(
+				.where(qVisitor.demonstration.id.eq(demonstrationId).and(
 						qVisitor.location.country.eq(countryCode)))
 				.groupBy(qVisitor.location.city)
 				.list(qVisitor.location.city, qVisitor.count());
@@ -55,11 +55,11 @@ public class VisitorDao extends AbstractJpaDao<Visitor> implements
 
 	@Override
 	public List<Tuple> getCitiesByProtestIdAndCountryCodeAndActionType(
-			Long protestId, String countryCode, ActionType actionType) {
+			Long demonstrationId, String countryCode, ActionType actionType) {
 		QVisitor qVisitor = QVisitor.visitor;
 		return new JPAQuery(getEntityManager())
 				.from(qVisitor)
-				.where(qVisitor.protest.id.eq(protestId)
+				.where(qVisitor.demonstration.id.eq(demonstrationId)
 						.and(qVisitor.location.country.eq(countryCode))
 						.and(qVisitor.actionType.eq(actionType)))
 				.groupBy(qVisitor.location.city)

@@ -5,12 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-
 <h:body>
 
+
 	<h:form>
-		<h:commandButton value="Tuntetek" action="#{visitorMB.createDemonstrator}" rendered="#{visitorMB.isDemonstrator() == false}"/>
-		<h:commandButton value="EllenTuntetek" action="#{visitorMB.createCounterDemonstrator}"/>
+		<h:commandButton value="Tuntetek"
+			action="#{visitorMB.createDemonstrator}"
+			disabled="#{visitorMB.demonstrator}" />
+		<h:commandButton value="EllenTuntetek"
+			action="#{visitorMB.createCounterDemonstrator}"
+			disabled="#{visitorMB.demonstrator}" />
 	</h:form>
+
 </h:body>
 </html>

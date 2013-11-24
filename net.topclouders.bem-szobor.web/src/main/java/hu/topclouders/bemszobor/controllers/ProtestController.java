@@ -31,7 +31,7 @@ public class ProtestController {
 	@ResponseBody
 	public String getActiveProtests() throws JsonGenerationException,
 			IOException {
-		Map<Demonstration, Long> protests = protestService.getActiveDemonstrators();
+		Map<Demonstration, Long> protests = protestService.getActiveDemonstrations();
 
 		return toJson(protests);
 	}
@@ -40,7 +40,7 @@ public class ProtestController {
 	@ResponseBody
 	public String getClosedProtests() throws IOException {
 
-		Map<Demonstration, Long> protests = protestService.getClosedProtests();
+		Map<Demonstration, Long> protests = protestService.getClosedDemonstrations();
 
 		return toJson(protests);
 	}
@@ -48,7 +48,7 @@ public class ProtestController {
 	@RequestMapping(value = "/protests/inprogress", method = RequestMethod.GET)
 	@ResponseBody
 	public String getInProgessProtests() throws IOException {
-		Map<Demonstration, Long> protests = protestService.getInProgressProtests();
+		Map<Demonstration, Long> protests = protestService.getInProgressDemonstrations();
 
 		return toJson(protests);
 

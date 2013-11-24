@@ -17,10 +17,10 @@ public class Visitor extends AbstractEntity {
 	private String uuid;
 
 	@ManyToOne
-	private Demonstration protest;
+	private Demonstration demonstration;
 
 	@Embedded
-	private Person person;
+	private Person person = new Person();
 
 	private Date joinDate;
 
@@ -40,12 +40,12 @@ public class Visitor extends AbstractEntity {
 		this.uuid = uuid;
 	}
 
-	public Demonstration getProtest() {
-		return protest;
+	public Demonstration getDemonstration() {
+		return demonstration;
 	}
 
-	public void setProtest(Demonstration protest) {
-		this.protest = protest;
+	public void setDemonstration(Demonstration demonstration) {
+		this.demonstration = demonstration;
 	}
 
 	public Person getPerson() {

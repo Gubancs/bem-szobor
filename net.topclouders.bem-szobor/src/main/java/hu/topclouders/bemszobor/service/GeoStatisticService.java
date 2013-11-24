@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.service;
 
-import hu.topclouders.bemszobor.dao.IVisitorRepository;
+import hu.topclouders.bemszobor.dao.IVisitorDao;
 import hu.topclouders.bemszobor.domain.QVisitor;
 import hu.topclouders.bemszobor.enums.ActionType;
 
@@ -18,7 +18,7 @@ import com.mysema.query.Tuple;
 public class GeoStatisticService {
 
 	@Autowired
-	private IVisitorRepository visitorRepository;
+	private IVisitorDao visitorRepository;
 
 	public Map<String, Long> getCountriesByProtestId(Long protestId) {
 		Assert.notNull(protestId);

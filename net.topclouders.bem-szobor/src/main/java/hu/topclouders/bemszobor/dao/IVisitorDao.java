@@ -7,7 +7,7 @@ import com.mysema.query.Tuple;
 import hu.topclouders.bemszobor.domain.Visitor;
 import hu.topclouders.bemszobor.enums.ActionType;
 
-public interface IVisitorRepository extends IGenericDao<Visitor> {
+public interface IVisitorDao extends IGenericDao<Visitor> {
 
 	public List<Tuple> findCountriesByProtestId(Long protestId);
 
