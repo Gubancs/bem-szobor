@@ -4,14 +4,11 @@ import hu.topclouders.bemszobor.dao.IActionRepository;
 import hu.topclouders.bemszobor.dao.ILocationRepository;
 import hu.topclouders.bemszobor.dao.IProtestRepository;
 import hu.topclouders.bemszobor.domain.Action;
-import hu.topclouders.bemszobor.domain.Location;
-import hu.topclouders.bemszobor.domain.Person;
-import hu.topclouders.bemszobor.domain.Person.Gender;
 import hu.topclouders.bemszobor.domain.Demonstration;
+import hu.topclouders.bemszobor.domain.Location;
 import hu.topclouders.bemszobor.domain.Visitor;
-import hu.topclouders.bemszobor.enums.ActionType;
 import hu.topclouders.bemszobor.service.ProtestService;
-import hu.topclouders.bemszobor.service.RegistrationService;
+import hu.topclouders.bemszobor.service.VisitorService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +27,7 @@ import org.testng.annotations.Test;
 public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
-	private RegistrationService registrationService;
+	private VisitorService registrationService;
 
 	@Autowired
 	private IProtestRepository protestRepository;
@@ -92,13 +89,9 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	private List<Visitor> createVisitors(Demonstration protest) {
 
-		Person person;
 		List<Visitor> visitors = new ArrayList<Visitor>();
 		Location location = new Location();
 		for (int i = 0; i < 10; i++) {
-
-			person = new Person("Person_" + i, i % 3 == 0 ? Gender.MALE
-					: Gender.FEMALE, 25);
 
 			location = new Location();
 			location.setCity("City_" + i % 2);
@@ -109,25 +102,24 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 			location = locationDao.save(location);
 
-			Visitor visitor = registrationService.registerVisitor(protest
-					.getId(), i % 2 == 0 ? ActionType.DEMONSTRATOR
-					: ActionType.COUNTER_DEMONSTRATOR, person, location);
+			Visitor visitor = registrationService
+					.createVisitor(protest.getId());
 
-			Action action = new Action(visitor, ActionType.JOIN);
+			Action action = new Action(visitor);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
 			action.setProtest(protest);
 			action.setValue(1);
 
 			actionRepository.save(action);
 
-			action = new Action(visitor, ActionType.DEMONSTRATOR);
+			action = new Action(visitor);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
 			action.setProtest(protest);
 			action.setValue(1);
 
 			actionRepository.save(action);
 
-			action = new Action(visitor, ActionType.DEMONSTRATOR);
+			action = new Action(visitor);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
 			action.setProtest(protest);
 			action.setValue(-1);

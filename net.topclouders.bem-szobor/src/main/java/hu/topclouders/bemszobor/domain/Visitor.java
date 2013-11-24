@@ -20,7 +20,7 @@ public class Visitor extends AbstractEntity {
 	private Demonstration protest;
 
 	@Embedded
-	private Person person;
+	private Person person = new Person();
 
 	private Date joinDate;
 

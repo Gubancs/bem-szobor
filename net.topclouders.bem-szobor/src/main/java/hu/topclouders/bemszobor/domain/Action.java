@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
+import org.springframework.util.Assert;
+
 @Entity
 public class Action extends AbstractEntity {
 
@@ -23,13 +25,16 @@ public class Action extends AbstractEntity {
 
 	@Enumerated
 	private ActionType actionType;
-	
+
 	public Action() {
 	}
 
-	public Action(Visitor visitor, ActionType actionType) {
+	public Action(Visitor visitor) {
+		Assert.notNull(visitor);
+		Assert.notNull(visitor.getActionType());
+
 		this.visitor = visitor;
-		this.actionType = actionType;
+		this.actionType = visitor.getActionType();
 	}
 
 	public Demonstration getProtest() {
