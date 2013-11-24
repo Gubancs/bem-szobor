@@ -52,17 +52,15 @@ public class StatisticsController {
 		JsonGenerator gen = jsonFactory.createJsonGenerator(writer);
 
 		gen.writeStartArray();
+		gen.writeStartObject();
 		ActionTypeSerializer actionTypeSerializer = new ActionTypeSerializer();
 		for (ActionType actionType : totalStatistic.keySet()) {
 
-			gen.writeStartObject();
+			gen.writeNumberField(actionTypeSerializer.serialize(actionType),
+					totalStatistic.get(actionType));
 
-			gen.writeStringField("t",
-					actionTypeSerializer.serialize(actionType));
-			gen.writeNumberField("p", totalStatistic.get(actionType));
-
-			gen.writeEndObject();
 		}
+		gen.writeEndObject();
 		gen.writeEndArray();
 
 		gen.flush();

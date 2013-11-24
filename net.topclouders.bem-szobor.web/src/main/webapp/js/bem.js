@@ -32,11 +32,11 @@ $("#d1").on("click", function() {
 });
 
 $("#d2").on("click", function() {
-	updateProtests(SERVER_URL+"/protests/active", "#tprotests2");
+	updateProtests(SERVER_URL+"/protests/inprogress", "#tprotests2");
 });
 
 $("#d3").on("click", function() {
-	updateProtests(SERVER_URL+"/protests/active", "#tprotests3");
+	updateProtests(SERVER_URL+"/protests/closed", "#tprotests3");
 });
 
 $(document).ready(function() {
