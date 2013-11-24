@@ -76,12 +76,12 @@ body {
 	
   background:rgba(3, 178, 253, 1.0);
   background-image:url("../pictures/bg1.png") center center no-repeat;
-  background-image:url("../pictures/bg1.png"), -webkit-gradient(radial, center center, 0, center center, 460, from(rgba(244,122,32,1.0)), rgba(214, 69, 22, 1.0));
+  background-image:url("../pictures/bg1.png"), -webkit-gradient(radial, center center, 0, center center, 460, from(rgba(3, 178, 253, 1.0)), rgba(9, 75, 104, 1.0));
   background-image:url("../pictures/bg1.png"), -webkit-radial-gradient(circle, rgba(3, 178, 253, 1.0), rgba(9, 75, 104, 1.0));
-  background-image:url("../pictures/bg1.png"), -moz-radial-gradient(circle, rgba(244,122,32,1.0), rgba(214, 69, 22, 1.0));
-  background-image:url("../pictures/bg1.png"), -ms-radial-gradient(circle, rgba(244,122,32,1.0), rgba(214, 69, 22, 1.0));
+  background-image:url("../pictures/bg1.png"), -moz-radial-gradient(circle, rgba(3, 178, 253, 1.0), rrgba(9, 75, 104, 1.0));
+  background-image:url("../pictures/bg1.png"), -ms-radial-gradient(circle, rgba(3, 178, 253, 1.0), rgba(9, 75, 104, 1.0));
 
-	background-position:  center center;
+  background-position: center center;
  }
  
  .item{
@@ -95,6 +95,11 @@ body {
   bottom: 50px;
   text-align: left;
   vertical-align: middle;
+}
+
+.carousel-control{
+	
+	z-index: 1000;
 }
 
 
@@ -149,10 +154,53 @@ body {
 }
 
 
+.bemimage{
+	
+	position: absolute; 
+	float: left; 
+	width: 300px; 
+	z-index: 10;
+}
+
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
+@media(max-width: 768px){
+	
+	body{
+	padding: 0px !important;
+	
+	}
+	
+	.navbar-wrapper .container{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	
+	.carousel-caption {
+		left: 5%;
+		right: 5%;
+		margin-left: 10px;
+		text-align: center;
+	}
+	
+	.carousel-caption h1 {
+
+	line-height: 34px;	
+}
+	
+
+	.carousel , .carousel .item {
+		height: 500px ! important;
+	}
+	
+	.bemimage{
+		top: 100px;
+	}
+	
+
+}
 
 @media (min-width: 768px) {
 

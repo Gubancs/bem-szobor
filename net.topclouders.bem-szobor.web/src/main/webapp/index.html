@@ -33,7 +33,14 @@
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-
+<script>
+		$(document).ready(function() {
+			$('.carousel').carousel({
+				interval : 15000,
+				pause : "false"
+			})
+		});
+	</script>
 </head>
 <body id="heatmapArea">
 	<!-- NAVBAR ================================================== -->
@@ -86,9 +93,10 @@
 	<!-- Carousel ================================================== -->
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-		<img src="pictures/bem.png"
-			style="position: absolute; float: left; width: 300px; z-index: 10;" />
+		<img src="pictures/bem.png" class="bemimage" />
 		<!-- Indicators -->
+
+
 		<div class="carousel-inner">
 			<div class="item active">
 				<div class="container">
@@ -136,12 +144,14 @@
 
 		</div>
 
-		<a class="left carousel-control" href="#carousel-example-generic"
-			data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span>
-		</a> <a class="right carousel-control" href="#carousel-example-generic"
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		</a> <a class="right carousel-control" href="#myCarousel"
 			data-slide="next"> <span
 			class="glyphicon glyphicon-chevron-right"></span>
 		</a>
+
+
 	</div>
 	<!-- /.carousel -->
 
@@ -268,7 +278,7 @@
 		<div class="copyright">
 			&copy; 2013 Minden jog fenntartva bem-szobor.net | Készítette: <a
 				href="http://topclouders.com">www.toopclouders.com</a>.
-			
+
 		</div>
 
 		<ul class="social">
@@ -280,10 +290,12 @@
 		</ul>
 
 	</footer>
-	<script src="./js/jquery-1.10.2.min.js"></script>
-	<script src="./js/bootstrap.min.js"></script>
-	<script src="./js/holder.js"></script>
-	<script src="./js/bem.js"></script>
+	<script src="./resources/js/jquery-1.10.2.min.js"></script>
+	<script src="./resources/js/bootstrap.min.js"></script>
+	<script src="./resources/js/holder.js"></script>
+	<script src="./resources/js/bem.js"></script>
+
+	
 
 	<script>
 		(function(i, s, o, g, r, a, m) {
