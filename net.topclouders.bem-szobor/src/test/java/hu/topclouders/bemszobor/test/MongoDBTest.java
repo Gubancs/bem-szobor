@@ -7,7 +7,7 @@ import hu.topclouders.bemszobor.domain.Action;
 import hu.topclouders.bemszobor.domain.Location;
 import hu.topclouders.bemszobor.domain.Person;
 import hu.topclouders.bemszobor.domain.Person.Gender;
-import hu.topclouders.bemszobor.domain.Protest;
+import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.Visitor;
 import hu.topclouders.bemszobor.enums.ActionType;
 import hu.topclouders.bemszobor.service.ProtestService;
@@ -44,12 +44,12 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 	@Autowired
 	private ProtestService protestService;
 
-	private List<Protest> protests = new ArrayList<Protest>();
+	private List<Demonstration> protests = new ArrayList<Demonstration>();
 
 	@BeforeClass
 	public void beforeClass() {
 
-		Map<Protest, Long> activeDemonstrations = protestService
+		Map<Demonstration, Long> activeDemonstrations = protestService
 				.getActiveDemonstrators();
 
 		Calendar calendar = Calendar.getInstance();
@@ -66,8 +66,8 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 
 	}
 
-	private Protest createProtest(String name, Date start) {
-		Protest protest = new Protest();
+	private Demonstration createProtest(String name, Date start) {
+		Demonstration protest = new Demonstration();
 		protest.setEmail("ingatlanmarket.net@gmail.com");
 		protest.setOrganizer("Istvan Benedek");
 		protest.setStart(start);
@@ -81,16 +81,16 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 	@Test
 	public void mongoDbTest() {
 
-		List<Protest> demonstrations = protestRepository.findAll();
+		List<Demonstration> demonstrations = protestRepository.findAll();
 
-		for (Protest demonstration : demonstrations) {
+		for (Demonstration demonstration : demonstrations) {
 
 			createVisitors(demonstration);
 		}
 
 	}
 
-	private List<Visitor> createVisitors(Protest protest) {
+	private List<Visitor> createVisitors(Demonstration protest) {
 
 		Person person;
 		List<Visitor> visitors = new ArrayList<Visitor>();
@@ -144,7 +144,7 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 	public void afterClass() {
 
 		int index;
-		for (Protest protest : protests) {
+		for (Demonstration protest : protests) {
 			index = protests.indexOf(protest);
 
 			if (index % 2 == 0) {

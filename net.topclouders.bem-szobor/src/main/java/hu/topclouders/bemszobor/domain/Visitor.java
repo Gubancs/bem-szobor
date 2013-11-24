@@ -14,10 +14,10 @@ public class Visitor extends AbstractEntity {
 
 	private static final long serialVersionUID = 8288261956764742517L;
 
-	@ManyToOne
-	private Protest protest;
-
 	private String uuid;
+
+	@ManyToOne
+	private Demonstration protest;
 
 	@Embedded
 	private Person person;
@@ -40,11 +40,11 @@ public class Visitor extends AbstractEntity {
 		this.uuid = uuid;
 	}
 
-	public Protest getProtest() {
+	public Demonstration getProtest() {
 		return protest;
 	}
 
-	public void setProtest(Protest protest) {
+	public void setProtest(Demonstration protest) {
 		this.protest = protest;
 	}
 

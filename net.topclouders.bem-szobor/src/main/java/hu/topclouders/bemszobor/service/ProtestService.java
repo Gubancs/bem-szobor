@@ -2,7 +2,7 @@ package hu.topclouders.bemszobor.service;
 
 import static hu.topclouders.bemszobor.predicates.ProtestPredicate.*;
 import hu.topclouders.bemszobor.dao.IProtestRepository;
-import hu.topclouders.bemszobor.domain.Protest;
+import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.QAction;
 import hu.topclouders.bemszobor.enums.ActionType;
 
@@ -34,7 +34,7 @@ public class ProtestService {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public Map<Protest, Long> getActiveDemonstrators() {
+	public Map<Demonstration, Long> getActiveDemonstrators() {
 
 		QAction qAction = QAction.action;
 
@@ -47,8 +47,8 @@ public class ProtestService {
 						qAction.protest.name.desc()).limit(PAGE_LIMIT)
 				.list(Projections.tuple(qAction.protest, qAction.count()));
 
-		Map<Protest, Long> result = Maps.newHashMap();
-		Protest protest;
+		Map<Demonstration, Long> result = Maps.newHashMap();
+		Demonstration protest;
 		Long visitors;
 		for (Tuple tuple : list) {
 
@@ -61,7 +61,7 @@ public class ProtestService {
 		return result;
 	}
 
-	public Map<Protest, Long> getClosedProtests() {
+	public Map<Demonstration, Long> getClosedProtests() {
 
 		QAction qAction = QAction.action;
 
@@ -73,8 +73,8 @@ public class ProtestService {
 				.orderBy(qAction.protest.start.desc()).limit(PAGE_LIMIT)
 				.list(qAction.protest, qAction.value.sum());
 
-		Map<Protest, Long> result = Maps.newHashMap();
-		Protest protest;
+		Map<Demonstration, Long> result = Maps.newHashMap();
+		Demonstration protest;
 		Long maxProtesters;
 		Long protesters;
 		for (Tuple tuple : list) {
@@ -94,7 +94,7 @@ public class ProtestService {
 		return result;
 	}
 
-	public Map<Protest, Long> getInProgressProtests() {
+	public Map<Demonstration, Long> getInProgressProtests() {
 
 		QAction qAction = QAction.action;
 
@@ -105,8 +105,8 @@ public class ProtestService {
 				.groupBy(qAction.protest).orderBy(qAction.protest.name.desc())
 				.limit(PAGE_LIMIT).list(qAction.protest, qAction.value.sum());
 
-		Map<Protest, Long> result = Maps.newHashMap();
-		Protest protest;
+		Map<Demonstration, Long> result = Maps.newHashMap();
+		Demonstration protest;
 		Long protesters;
 		for (Tuple tuple : list) {
 

@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.controllers;
 
-import hu.topclouders.bemszobor.domain.Protest;
+import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.service.ProtestService;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class ProtestController {
 	@ResponseBody
 	public String getActiveProtests() throws JsonGenerationException,
 			IOException {
-		Map<Protest, Long> protests = protestService.getActiveDemonstrators();
+		Map<Demonstration, Long> protests = protestService.getActiveDemonstrators();
 
 		return toJson(protests);
 	}
@@ -40,7 +40,7 @@ public class ProtestController {
 	@ResponseBody
 	public String getClosedProtests() throws IOException {
 
-		Map<Protest, Long> protests = protestService.getClosedProtests();
+		Map<Demonstration, Long> protests = protestService.getClosedProtests();
 
 		return toJson(protests);
 	}
@@ -48,13 +48,13 @@ public class ProtestController {
 	@RequestMapping(value = "/protests/inprogress", method = RequestMethod.GET)
 	@ResponseBody
 	public String getInProgessProtests() throws IOException {
-		Map<Protest, Long> protests = protestService.getInProgressProtests();
+		Map<Demonstration, Long> protests = protestService.getInProgressProtests();
 
 		return toJson(protests);
 
 	}
 
-	private String toJson(Map<Protest, Long> protests) throws IOException,
+	private String toJson(Map<Demonstration, Long> protests) throws IOException,
 			JsonGenerationException {
 		StringWriter writer = new StringWriter();
 		JsonGenerator jsonGenerator = jsonFactory.createJsonGenerator(writer);
@@ -62,7 +62,7 @@ public class ProtestController {
 
 		SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
 
-		for (Protest protest : protests.keySet()) {
+		for (Demonstration protest : protests.keySet()) {
 			jsonGenerator.writeStartObject();
 			jsonGenerator.writeNumberField("protest_id", protest.getId());
 			jsonGenerator.writeStringField("date",

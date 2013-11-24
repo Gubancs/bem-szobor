@@ -5,7 +5,7 @@ import hu.topclouders.bemszobor.dao.IProtestRepository;
 import hu.topclouders.bemszobor.dao.IVisitorRepository;
 import hu.topclouders.bemszobor.domain.Location;
 import hu.topclouders.bemszobor.domain.Person;
-import hu.topclouders.bemszobor.domain.Protest;
+import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.Visitor;
 import hu.topclouders.bemszobor.enums.ActionType;
 
@@ -39,7 +39,7 @@ public class RegistrationService {
 
 		location = getOrCreateLocation(location);
 
-		Protest protest = protestRepository.findOne(protestId);
+		Demonstration protest = protestRepository.findOne(protestId);
 
 		if (protest == null) {
 			throw new IllegalArgumentException("Protest not found");

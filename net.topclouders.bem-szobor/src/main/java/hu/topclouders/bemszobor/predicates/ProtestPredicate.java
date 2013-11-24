@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.predicates;
 
-import hu.topclouders.bemszobor.domain.QProtest;
+import hu.topclouders.bemszobor.domain.QDemonstration;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,18 +8,18 @@ import java.util.Date;
 import com.mysema.query.types.Predicate;
 
 public class ProtestPredicate {
-	public static Predicate isClosedProtest(QProtest qProtest) {
+	public static Predicate isClosedProtest(QDemonstration qProtest) {
 		return qProtest.closed.isNotNull();
 	}
 
-	public static Predicate isInProgressProtest(QProtest qProtest) {
+	public static Predicate isInProgressProtest(QDemonstration qProtest) {
 		Date date = Calendar.getInstance().getTime();
 		return qProtest.start.before(date)
 				.and(qProtest.end.isNull().or(qProtest.end.after(date)))
 				.and(qProtest.closed.isNull());
 	}
 
-	public static Predicate isActiveProtest(QProtest qProtest) {
+	public static Predicate isActiveProtest(QDemonstration qProtest) {
 
 		Date date = Calendar.getInstance().getTime();
 

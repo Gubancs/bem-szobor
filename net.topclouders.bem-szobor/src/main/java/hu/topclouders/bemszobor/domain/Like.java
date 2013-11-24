@@ -10,16 +10,13 @@ import javax.persistence.TemporalType;
 @Entity
 public class Like extends AbstractEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4597919058940345684L;
 
 	@ManyToOne
 	private Visitor visitor;
 
 	@ManyToOne
-	private Protest demonstration;
+	private Demonstration demonstration;
 
 	private Integer postIndex;
 
@@ -37,11 +34,11 @@ public class Like extends AbstractEntity {
 		this.visitor = visitor;
 	}
 
-	public Protest getDemonstration() {
+	public Demonstration getDemonstration() {
 		return demonstration;
 	}
 
-	public void setDemonstration(Protest demonstration) {
+	public void setDemonstration(Demonstration demonstration) {
 		this.demonstration = demonstration;
 	}
 

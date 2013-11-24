@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Location extends AbstractEntity {
+	
 	private static final long serialVersionUID = -6456274410947235242L;
 
 	private double latitude;
