@@ -30,9 +30,16 @@ public class VisitorMB implements Serializable {
 				.getExternalContext().getRequestParameterMap();
 		String param = params.get("protestId");
 
+		Long demonstrationId = Long.valueOf(param);
 		try {
 			if (visitor == null) {
-				visitor = visitorService.createVisitor(Long.valueOf(param));
+				visitor = visitorService.createVisitor(demonstrationId);
+			}
+
+			if (!demonstrationId.equals(visitor.getDemonstration().getId())) {
+
+				visitor = visitorService.registerVisitor(visitor,
+						demonstrationId);
 			}
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("Ivalid protest id format: "
@@ -42,11 +49,11 @@ public class VisitorMB implements Serializable {
 	}
 
 	public void createDemonstrator() {
-		visitor = visitorService.demonstrate(visitor);
+		visitor = visitorService.registerDemonstrator(visitor);
 	}
 
 	public void createCounterDemonstrator() {
-		visitor = visitorService.counterDemonstrate(visitor);
+		visitor = visitorService.registerCounterDemonstrator(visitor);
 	}
 
 	public Boolean getDemonstrator() {

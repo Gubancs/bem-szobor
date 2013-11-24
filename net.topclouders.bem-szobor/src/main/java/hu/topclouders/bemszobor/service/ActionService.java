@@ -7,6 +7,7 @@ import hu.topclouders.bemszobor.domain.Visitor;
 
 import java.util.Calendar;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,10 +18,12 @@ import org.springframework.util.Assert;
 @Transactional(propagation = Propagation.REQUIRED)
 public class ActionService {
 
+	private static final Logger LOGGER = Logger.getLogger(ActionService.class);
+
 	@Autowired
 	private IActionDao actionRepository;
 
-	public void createAction(Demonstration demonstration, Visitor visitor) {
+	public Action createPlusAction(Demonstration demonstration, Visitor visitor) {
 		Assert.notNull(demonstration);
 		Assert.notNull(visitor);
 
@@ -28,6 +31,30 @@ public class ActionService {
 		action.setDemonstration(demonstration);
 		action.setDate(Calendar.getInstance().getTimeInMillis());
 		action.setValue(1);
+
+		actionRepository.save(action);
+
+		LOGGER.info(String.format(
+				"%s. Visitor %s action successfully created in the %s",
+				visitor.getId(), action.getActionType(),
+				demonstration.getName()));
+
+		return action;
+	}
+
+	public void createMinusAction(Demonstration demonstration, Visitor visitor) {
+		Assert.notNull(demonstration);
+		Assert.notNull(visitor);
+
+		Action action = new Action(visitor);
+		action.setDemonstration(demonstration);
+		action.setDate(Calendar.getInstance().getTimeInMillis());
+		action.setValue(-1);
+
+		LOGGER.info(String.format(
+				"%s. Visitor %s action successfully invalidated in the %s",
+				visitor.getId(), action.getActionType(),
+				demonstration.getName()));
 
 		actionRepository.save(action);
 

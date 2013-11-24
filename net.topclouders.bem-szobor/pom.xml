@@ -72,6 +72,11 @@
 			<artifactId>postgis-jdbc</artifactId>
 			<version>1.5.2</version>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -158,5 +163,5 @@
 	</repositories>
 	<groupId>net.topclouders</groupId>
 	<artifactId>bem-szobor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 </project>

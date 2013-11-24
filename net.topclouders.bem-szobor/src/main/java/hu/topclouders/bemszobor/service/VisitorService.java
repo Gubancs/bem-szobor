@@ -9,6 +9,7 @@ import hu.topclouders.bemszobor.enums.ActionType;
 import java.util.Calendar;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,6 +19,8 @@ import org.springframework.util.Assert;
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class VisitorService {
+
+	private static final Logger LOGGER = Logger.getLogger(VisitorService.class);
 
 	@Autowired
 	private IVisitorDao visitorDao;
@@ -37,6 +40,7 @@ public class VisitorService {
 		Demonstration demonstration = demonstrationDao.findOne(demonstrationId);
 
 		if (demonstration == null) {
+			LOGGER.error("Demonstration cannot be found");
 			throw new IllegalArgumentException(
 					"Demonstration cannot be found with id: " + demonstrationId);
 		}
@@ -50,33 +54,65 @@ public class VisitorService {
 
 		visitor = visitorDao.save(visitor);
 
-		actionService.createAction(demonstration, visitor);
+		LOGGER.info(String.format("New visitor created on %s demonstration",
+				demonstration.getName()));
+
+		actionService.createPlusAction(demonstration, visitor);
 
 		return visitor;
 	}
 
-	public Visitor demonstrate(Visitor visitor) {
+	public Visitor registerDemonstrator(Visitor visitor) {
 		Assert.notNull(visitor);
 
-		visitor.setActionType(ActionType.DEMONSTRATOR);
+		visitor = updateVisitor(visitor, visitor.getDemonstration().getId(),
+				ActionType.DEMONSTRATOR);
 
-		visitor = visitorDao.save(visitor);
-
-		actionService.createAction(visitor.getDemonstration(), visitor);
+		LOGGER.info(String.format(
+				"Demonstrator %s registered in the %s demonstration",
+				visitor.getId(), visitor.getDemonstration().getName()));
 
 		return visitor;
 	}
 
-	public Visitor counterDemonstrate(Visitor visitor) {
+	public Visitor registerCounterDemonstrator(Visitor visitor) {
 		Assert.notNull(visitor);
 
-		visitor.setActionType(ActionType.COUNTER_DEMONSTRATOR);
+		visitor = updateVisitor(visitor, visitor.getDemonstration().getId(),
+				ActionType.COUNTER_DEMONSTRATOR);
+
+		LOGGER.info(String.format(
+				"Counter Demonstrator %s registered in the %s demonstration",
+				visitor.getId(), visitor.getDemonstration().getName()));
+
+		return visitor;
+	}
+
+	public Visitor registerVisitor(Visitor visitor, Long demonstrationId) {
+		return updateVisitor(visitor, demonstrationId, ActionType.VISITOR);
+	}
+
+	public Visitor updateVisitor(Visitor visitor, Long demonstrationId,
+			ActionType actionType) {
+		Assert.notNull(demonstrationId);
+		visitor = visitorDao.findOne(visitor.getId());
+
+		actionService.createMinusAction(visitor.getDemonstration(), visitor);
+
+		Demonstration demonstration = demonstrationDao.findOne(demonstrationId);
+		if (demonstration == null) {
+			throw new IllegalArgumentException(
+					"Demonstration cannot be found with id: " + demonstrationId);
+		}
+
+		visitor.setDemonstration(demonstration);
+		visitor.setActionType(actionType);
 
 		visitor = visitorDao.save(visitor);
 
-		actionService.createAction(visitor.getDemonstration(), visitor);
+		actionService.createPlusAction(demonstration, visitor);
 
-		return visitor;
+		return visitorDao.save(visitor);
 	}
 
 }
