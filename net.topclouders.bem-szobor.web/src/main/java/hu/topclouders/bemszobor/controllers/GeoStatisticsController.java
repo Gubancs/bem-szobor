@@ -75,13 +75,12 @@ public class GeoStatisticsController {
 		StringWriter writer = new StringWriter();
 		JsonGenerator jsonGenerator = jsonFactory.createJsonGenerator(writer);
 		jsonGenerator.writeStartArray();
-
+		jsonGenerator.writeStartObject();
 		for (String country : countries.keySet()) {
-			jsonGenerator.writeStartObject();
-			jsonGenerator.writeStringField("c", country);
-			jsonGenerator.writeNumberField("p", countries.get(country));
-			jsonGenerator.writeEndObject();
+			jsonGenerator.writeNumberField(country, countries.get(country));
+
 		}
+		jsonGenerator.writeEndObject();
 
 		jsonGenerator.writeEndArray();
 
