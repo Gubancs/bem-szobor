@@ -1,7 +1,6 @@
 package hu.topclouders.bemszobor.beans;
 
 import hu.topclouders.bemszobor.domain.Visitor;
-import hu.topclouders.bemszobor.enums.ActionType;
 import hu.topclouders.bemszobor.service.VisitorService;
 
 import java.io.Serializable;
@@ -24,40 +23,34 @@ public class VisitorMB implements Serializable {
 	private Visitor visitor;
 
 	@Autowired
-	private VisitorService registrationService;
+	private VisitorService visitorService;
 
 	public void visit() {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String param = params.get("protestId");
 
-		if (visitor == null) {
-			visitor = registrationService.createVisitor(Long.valueOf(param));
+		try {
+			if (visitor == null) {
+				visitor = visitorService.createVisitor(Long.valueOf(param));
+			}
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Ivalid protest id format: "
+					+ param);
 		}
-		
+
 	}
 
 	public void createDemonstrator() {
-
-		visitor.setActionType(ActionType.DEMONSTRATOR);
-		System.out.println("demonstrator created");
+		visitor = visitorService.demonstrate(visitor);
 	}
 
 	public void createCounterDemonstrator() {
-
-		visitor.setActionType(ActionType.COUNTER_DEMONSTRATOR);
-
-		System.out.println("counter demonstrator created");
+		visitor = visitorService.counterDemonstrate(visitor);
 	}
 
 	public Boolean getDemonstrator() {
-		return visitor != null
-				&& visitor.getActionType().equals(ActionType.DEMONSTRATOR);
+		return visitor != null && visitor.getActionType().isDemonstrator();
 	}
 
-	public Boolean getCounterDemonstrator() {
-		return visitor != null
-				&& visitor.getActionType().equals(
-						ActionType.COUNTER_DEMONSTRATOR);
-	}
 }

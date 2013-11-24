@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.service;
 
-import hu.topclouders.bemszobor.dao.ILocationRepository;
+import hu.topclouders.bemszobor.dao.ILocationDao;
 import hu.topclouders.bemszobor.domain.Location;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 public class LocationService {
 
 	@Autowired
-	private ILocationRepository locationRepository;
+	private ILocationDao locationRepository;
 
 	public Location getOrCreateLocation(String countryCode, String city) {
 

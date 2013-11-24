@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.service;
 
-import hu.topclouders.bemszobor.dao.IProtestRepository;
+import hu.topclouders.bemszobor.dao.IDemonstrationDao;
 import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.QAction;
 
@@ -21,9 +21,9 @@ import com.mysema.query.Tuple;
 public class ProtestService {
 
 	@Autowired
-	private IProtestRepository demonstrationRepository;
+	private IDemonstrationDao demonstrationRepository;
 
-	public Map<Demonstration, Long> getActiveDemonstrators() {
+	public Map<Demonstration, Long> getActiveDemonstrations() {
 		Date systemDate = Calendar.getInstance().getTime();
 
 		QAction qAction = QAction.action;
@@ -31,13 +31,14 @@ public class ProtestService {
 		Map<Demonstration, Long> result = Maps.newHashMap();
 		for (Tuple tuple : demonstrationRepository
 				.getActiveDemonstrators(systemDate)) {
-			result.put(tuple.get(qAction.protest), tuple.get(qAction.count()));
+			result.put(tuple.get(qAction.demonstration),
+					tuple.get(qAction.count()));
 		}
 
 		return result;
 	}
 
-	public Map<Demonstration, Long> getClosedProtests() {
+	public Map<Demonstration, Long> getClosedDemonstrations() {
 		Date systemDate = Calendar.getInstance().getTime();
 		QAction qAction = QAction.action;
 
@@ -45,9 +46,10 @@ public class ProtestService {
 		Demonstration protest;
 		Long maxProtesters;
 		Long protesters;
-		for (Tuple row : demonstrationRepository.getClosedProtests(systemDate)) {
+		for (Tuple row : demonstrationRepository
+				.getClosedDemonstrations(systemDate)) {
 
-			protest = row.get(qAction.protest);
+			protest = row.get(qAction.demonstration);
 
 			maxProtesters = result.get(protest);
 			protesters = row.get(qAction.value.sum()).longValue();
@@ -62,7 +64,7 @@ public class ProtestService {
 		return result;
 	}
 
-	public Map<Demonstration, Long> getInProgressProtests() {
+	public Map<Demonstration, Long> getInProgressDemonstrations() {
 
 		Date systemDate = Calendar.getInstance().getTime();
 
@@ -71,7 +73,7 @@ public class ProtestService {
 		Map<Demonstration, Long> result = Maps.newHashMap();
 		for (Tuple tuple : demonstrationRepository
 				.getInProgressProtests(systemDate)) {
-			result.put(tuple.get(qAction.protest),
+			result.put(tuple.get(qAction.demonstration),
 					tuple.get(qAction.value.sum()).longValue());
 		}
 

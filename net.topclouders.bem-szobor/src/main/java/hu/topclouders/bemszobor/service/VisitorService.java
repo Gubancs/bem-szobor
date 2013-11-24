@@ -1,7 +1,7 @@
 package hu.topclouders.bemszobor.service;
 
-import hu.topclouders.bemszobor.dao.IProtestRepository;
-import hu.topclouders.bemszobor.dao.IVisitorRepository;
+import hu.topclouders.bemszobor.dao.IDemonstrationDao;
+import hu.topclouders.bemszobor.dao.IVisitorDao;
 import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.Visitor;
 import hu.topclouders.bemszobor.enums.ActionType;
@@ -20,10 +20,10 @@ import org.springframework.util.Assert;
 public class VisitorService {
 
 	@Autowired
-	private IVisitorRepository visitorRepository;
+	private IVisitorDao visitorDao;
 
 	@Autowired
-	private IProtestRepository protestRepository;
+	private IDemonstrationDao demonstrationDao;
 
 	@Autowired
 	private ActionService actionService;
@@ -34,23 +34,47 @@ public class VisitorService {
 	public Visitor createVisitor(Long demonstrationId) {
 		Assert.notNull(demonstrationId);
 
-		Demonstration protest = protestRepository.findOne(demonstrationId);
+		Demonstration demonstration = demonstrationDao.findOne(demonstrationId);
 
-		if (protest == null) {
+		if (demonstration == null) {
 			throw new IllegalArgumentException(
 					"Demonstration cannot be found with id: " + demonstrationId);
 		}
 
 		Visitor visitor = new Visitor();
-		visitor.setProtest(protest);
+		visitor.setDemonstration(demonstration);
 		visitor.setActionType(ActionType.VISITOR);
 		visitor.setUuid(UUID.randomUUID().toString());
 		visitor.setJoinDate(Calendar.getInstance().getTime());
 		visitor.setActive(true);
 
-		visitorRepository.save(visitor);
+		visitor = visitorDao.save(visitor);
 
-		actionService.createAction(protest, visitor);
+		actionService.createAction(demonstration, visitor);
+
+		return visitor;
+	}
+
+	public Visitor demonstrate(Visitor visitor) {
+		Assert.notNull(visitor);
+
+		visitor.setActionType(ActionType.DEMONSTRATOR);
+
+		visitor = visitorDao.save(visitor);
+
+		actionService.createAction(visitor.getDemonstration(), visitor);
+
+		return visitor;
+	}
+
+	public Visitor counterDemonstrate(Visitor visitor) {
+		Assert.notNull(visitor);
+
+		visitor.setActionType(ActionType.COUNTER_DEMONSTRATOR);
+
+		visitor = visitorDao.save(visitor);
+
+		actionService.createAction(visitor.getDemonstration(), visitor);
 
 		return visitor;
 	}

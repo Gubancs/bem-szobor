@@ -1,7 +1,7 @@
 package hu.topclouders.bemszobor.dao.impl;
 
 import static hu.topclouders.bemszobor.predicates.ProtestPredicate.*;
-import hu.topclouders.bemszobor.dao.IProtestRepository;
+import hu.topclouders.bemszobor.dao.IDemonstrationDao;
 import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.QAction;
 import hu.topclouders.bemszobor.enums.ActionType;
@@ -16,8 +16,8 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Projections;
 
 @Repository
-public class ProtestDao extends AbstractJpaDao<Demonstration> implements
-		IProtestRepository {
+public class DemonstrationDao extends AbstractJpaDao<Demonstration> implements
+		IDemonstrationDao {
 
 	private static final Integer PAGE_LIMIT = 10;
 
@@ -27,24 +27,25 @@ public class ProtestDao extends AbstractJpaDao<Demonstration> implements
 		JPAQuery query = new JPAQuery(getEntityManager()).from(qAction);
 		return query
 				.where(qAction.actionType.eq(ActionType.JOIN).and(
-						isActiveProtest(qAction.protest, date)))
-				.groupBy(qAction.protest.id)
-				.orderBy(qAction.protest.start.desc(),
-						qAction.protest.name.desc()).limit(PAGE_LIMIT)
-				.list(Projections.tuple(qAction.protest, qAction.count()));
+						isActiveDemonstration(qAction.demonstration, date)))
+				.groupBy(qAction.demonstration.id)
+				.orderBy(qAction.demonstration.start.desc(),
+						qAction.demonstration.name.desc())
+				.limit(PAGE_LIMIT)
+				.list(Projections.tuple(qAction.demonstration, qAction.count()));
 	}
 
 	@Override
-	public List<Tuple> getClosedProtests(Date date) {
+	public List<Tuple> getClosedDemonstrations(Date date) {
 		QAction qAction = QAction.action;
 
 		return new JPAQuery(getEntityManager())
 				.from(qAction)
 				.where(qAction.actionType.eq(ActionType.DEMONSTRATOR).and(
-						isClosedProtest(qAction.protest, date)))
-				.groupBy(qAction.protest.id, qAction.date)
-				.orderBy(qAction.protest.start.desc()).limit(PAGE_LIMIT)
-				.list(qAction.protest, qAction.value.sum());
+						isClosedDemonstration(qAction.demonstration, date)))
+				.groupBy(qAction.demonstration.id, qAction.date)
+				.orderBy(qAction.demonstration.start.desc()).limit(PAGE_LIMIT)
+				.list(qAction.demonstration, qAction.value.sum());
 	}
 
 	@Override
@@ -54,8 +55,9 @@ public class ProtestDao extends AbstractJpaDao<Demonstration> implements
 		JPAQuery query = new JPAQuery(getEntityManager()).from(qAction);
 		return query
 				.where(qAction.actionType.eq(ActionType.DEMONSTRATOR).and(
-						isInProgressProtest(qAction.protest, date)))
-				.groupBy(qAction.protest).orderBy(qAction.protest.name.desc())
-				.limit(PAGE_LIMIT).list(qAction.protest, qAction.value.sum());
+						isInProgressDemonstration(qAction.demonstration, date)))
+				.groupBy(qAction.demonstration)
+				.orderBy(qAction.demonstration.name.desc()).limit(PAGE_LIMIT)
+				.list(qAction.demonstration, qAction.value.sum());
 	}
 }

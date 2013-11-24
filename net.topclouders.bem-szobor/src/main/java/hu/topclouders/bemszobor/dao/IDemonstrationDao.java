@@ -7,11 +7,11 @@ import java.util.List;
 
 import com.mysema.query.Tuple;
 
-public interface IProtestRepository extends IGenericDao<Demonstration> {
+public interface IDemonstrationDao extends IGenericDao<Demonstration> {
 
 	public List<Tuple> getActiveDemonstrators(Date date);
 
-	public List<Tuple> getClosedProtests(Date date);
+	public List<Tuple> getClosedDemonstrations(Date date);
 
 	public List<Tuple> getInProgressProtests(Date date);
 

@@ -1,6 +1,6 @@
 package hu.topclouders.bemszobor.service;
 
-import hu.topclouders.bemszobor.dao.IActionRepository;
+import hu.topclouders.bemszobor.dao.IActionDao;
 import hu.topclouders.bemszobor.domain.Action;
 import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.Visitor;
@@ -18,14 +18,14 @@ import org.springframework.util.Assert;
 public class ActionService {
 
 	@Autowired
-	private IActionRepository actionRepository;
+	private IActionDao actionRepository;
 
-	public void createAction(Demonstration protest, Visitor visitor) {
-		Assert.notNull(protest);
+	public void createAction(Demonstration demonstration, Visitor visitor) {
+		Assert.notNull(demonstration);
 		Assert.notNull(visitor);
 
 		Action action = new Action(visitor);
-		action.setProtest(protest);
+		action.setDemonstration(demonstration);
 		action.setDate(Calendar.getInstance().getTimeInMillis());
 		action.setValue(1);
 

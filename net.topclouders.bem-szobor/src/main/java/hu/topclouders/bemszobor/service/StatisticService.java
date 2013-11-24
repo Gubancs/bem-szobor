@@ -34,7 +34,7 @@ public class StatisticService {
 
 		List<Tuple> list = new JPAQuery(entityManager)
 				.from(qVisitor)
-				.where(qVisitor.protest.id.eq(protestId))
+				.where(qVisitor.demonstration.id.eq(protestId))
 				.groupBy(qVisitor.person.age, qVisitor.person.gender)
 				.orderBy(qVisitor.person.age.asc())
 				.list(qVisitor.person.age, qVisitor.person.gender,
@@ -52,7 +52,7 @@ public class StatisticService {
 
 		List<Tuple> list = new JPAQuery(entityManager)
 				.from(qVisitor)
-				.where(qVisitor.protest.id.eq(protestId).and(
+				.where(qVisitor.demonstration.id.eq(protestId).and(
 						qVisitor.actionType.eq(actionType)))
 				.groupBy(qVisitor.person.age, qVisitor.person.gender)
 				.orderBy(qVisitor.person.age.asc())
@@ -94,7 +94,7 @@ public class StatisticService {
 		QVisitor qVisitor = QVisitor.visitor;
 
 		List<Tuple> list = new JPAQuery(entityManager).from(qVisitor)
-				.where(qVisitor.protest.id.eq(protestId))
+				.where(qVisitor.demonstration.id.eq(protestId))
 				.groupBy(qVisitor.actionType)
 				.list(qVisitor.actionType, qVisitor.count());
 
