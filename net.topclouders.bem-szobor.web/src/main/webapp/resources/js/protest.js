@@ -206,7 +206,7 @@ function getTotalWorldChartData() {
 }
 
 function drawMarkersMap() {
-
+	$("#mapbackbutton").hide();
 	total_worldChart_options = {
 			language : "hu",
 			displayMode : 'region',
@@ -217,18 +217,22 @@ function drawMarkersMap() {
 	
 	total_worldChart.draw(getTotalWorldChartData() , total_worldChart_options);
 
-	google.visualization.events.addListener(total_worldChart, 'regionClick', function() {
-		var selection = total_worldChart.getSelection();
-		var country = selection.getCountry();
-		var data = getTotalWorldChartDataByCountry(country);
-		total_worldChart_options["region"] = country;
+	google.visualization.events.addListener(total_worldChart, 'regionClick', function(eventData) {
+		var countryISO2 = eventData["region"];
+		var data = getTotalWorldChartDataByCountry(countryISO2);
+		total_worldChart_options["region"] = countryISO2;
 		total_worldChart_options["displayMode"] = "markers";
 		total_worldChart.draw(data, total_worldChart_options);
-
+		setTimeout(function(){
+			$("#mapbackbutton").show();
+		},500);
 	});
 
 };
 
+$("#mapbackbutton").click(function(){
+	drawMarkersMap();
+});
 $(document).ready(function() {
 
 });
