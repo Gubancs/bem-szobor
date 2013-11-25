@@ -79,7 +79,7 @@ body {
   background-image:url("../pictures/bg1.png") center center no-repeat;
   background-image:url("../pictures/bg1.png"), -webkit-gradient(radial, center center, 0, center center, 460, from(rgba(3, 178, 253, 1.0)), rgba(9, 75, 104, 1.0));
   background-image:url("../pictures/bg1.png"), -webkit-radial-gradient(circle, rgba(3, 178, 253, 1.0), rgba(9, 75, 104, 1.0));
-  background-image:url("../pictures/bg1.png"), -moz-radial-gradient(circle, rgba(3, 178, 253, 1.0), rrgba(9, 75, 104, 1.0));
+  background-image:url("../pictures/bg1.png"), -moz-radial-gradient(circle, rgba(3, 178, 253, 1.0), rgba(9, 75, 104, 1.0));
   background-image:url("../pictures/bg1.png"), -ms-radial-gradient(circle, rgba(3, 178, 253, 1.0), rgba(9, 75, 104, 1.0));
 
   background-position: center center;
