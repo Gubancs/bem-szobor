@@ -99,7 +99,7 @@ body {
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
 	left:30%;
-	right: 30%;
+	right:  30%;
   padding: 0;
   bottom: 60px;
   text-align: left;
@@ -175,7 +175,27 @@ body {
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
-@media(max-width: 768px){
+@media(max-width: 1200px){
+		
+	.carousel-caption h1 {
+
+		line-height: 40px;	
+	}
+	
+	.carousel-caption p{
+		text-align: justify;
+	}
+	
+	.carousel-caption {
+		left: 22%;
+		right: 22%;
+		bottom: 50px;
+		margin-left: 10px;
+		text-align: center;
+	}
+}
+
+@media(max-width: 800px){
 		
 	.carousel-caption h1 {
 
