@@ -17,6 +17,8 @@ body {
 */  font-weight: 200;
 
   line-height: 1.5em;
+  
+  padding: 0px !important;
 }
 
 
@@ -83,6 +85,12 @@ body {
   background-position: center center;
  }
  
+ .carousel-caption h1 {
+
+		font-size: 26px;	
+	}
+	
+	
  .item{
  
  background-color: transparent;
@@ -90,8 +98,8 @@ body {
    
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
-	left:26%;
-	right: 10%;
+	left:30%;
+	right: 30%;
   padding: 0;
   bottom: 60px;
   text-align: left;
@@ -168,11 +176,26 @@ body {
 -------------------------------------------------- */
 
 @media(max-width: 768px){
-	
-	body{
-	padding: 0px !important;
-	
+		
+	.carousel-caption h1 {
+
+		line-height: 40px;	
 	}
+	
+	.carousel-caption p{
+		text-align: justify;
+	}
+	
+	.carousel-caption {
+		left: 15%;
+		right: 15%;
+		margin-left: 10px;
+		text-align: center;
+	}
+}
+
+@media(max-width: 580px){
+	
 	
 	.navbar-wrapper .container{
 		padding-left: 15px;
@@ -183,21 +206,26 @@ body {
 		left: 5%;
 		right: 5%;
 		margin-left: 10px;
+		bottom: 160px;
 		text-align: center;
 	}
 	
 	.carousel-caption h1 {
-
-	line-height: 34px;	
-}
+		line-height: 34px;	
+	}
 	
+	.carousel-caption p{
+		text-align: justify;
+	}
 
 	.carousel , .carousel .item {
-		height: 550px ! important;
+		height: 650px ! important;
 	}
 	
 	.bemimage{
-		top: 100px;
+		width: 150px;
+		top: 450px;
+		position: absolute;
 	}
 	
 
@@ -239,8 +267,8 @@ body {
       .carousel-caption p {
         font-size: 16px;
         line-height: 1.4;
-        text-align: left;
         font-weight: 100;
+        text-align: justify;;
       }
 
 
