@@ -4,9 +4,11 @@ import hu.topclouders.bemszobor.dao.IActionDao;
 import hu.topclouders.bemszobor.dao.IDemonstrationDao;
 import hu.topclouders.bemszobor.dao.ILocationDao;
 import hu.topclouders.bemszobor.domain.Action;
+import hu.topclouders.bemszobor.domain.Action.ActionValue;
 import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.Location;
 import hu.topclouders.bemszobor.domain.Visitor;
+import hu.topclouders.bemszobor.enums.ActionType;
 import hu.topclouders.bemszobor.service.ProtestService;
 import hu.topclouders.bemszobor.service.VisitorService;
 
@@ -108,21 +110,21 @@ public class MongoDBTest extends AbstractTestNGSpringContextTests {
 			Action action = new Action(visitor);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
 			action.setDemonstration(demonstration);
-			action.setValue(1);
+			action.setActionValue(ActionValue.DO);
 
 			actionRepository.save(action);
 
 			action = new Action(visitor);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
 			action.setDemonstration(demonstration);
-			action.setValue(1);
+			action.setActionValue(ActionValue.DO);
 
 			actionRepository.save(action);
 
 			action = new Action(visitor);
 			action.setDate(Calendar.getInstance().getTimeInMillis());
 			action.setDemonstration(demonstration);
-			action.setValue(-1);
+			action.setActionValue(ActionValue.UNDO);
 
 			actionRepository.save(action);
 

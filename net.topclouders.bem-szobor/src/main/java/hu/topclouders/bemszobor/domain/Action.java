@@ -4,6 +4,7 @@ import hu.topclouders.bemszobor.enums.ActionType;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 import org.springframework.util.Assert;
@@ -13,15 +14,19 @@ public class Action extends AbstractEntity {
 
 	private static final long serialVersionUID = -5820373980960232740L;
 
-	@ManyToOne
+	public static enum ActionValue {
+		DO, UNDO;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Demonstration demonstration;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Visitor visitor;
 
 	private long date;
 
-	private int value;
+	private int value = 1; // JOIN +1; LEAVE -1
 
 	@Enumerated
 	private ActionType actionType;
@@ -64,9 +69,17 @@ public class Action extends AbstractEntity {
 	public int getValue() {
 		return value;
 	}
-
-	public void setValue(int value) {
-		this.value = value;
+	
+	public void setActionValue(ActionValue actionValue) {
+		if (actionValue == null) {
+			throw new NullPointerException();
+		}
+		
+		if (actionValue == ActionValue.DO) {
+			this.value = 1;
+		}else {
+			this.value = -1;
+		}
 	}
 
 	public ActionType getActionType() {

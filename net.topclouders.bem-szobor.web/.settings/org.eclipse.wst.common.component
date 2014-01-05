@@ -4,7 +4,7 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="bem-szobor-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bem-szobor/bem-szobor">
+        <dependent-module archiveName="bem-szobor-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/net.topclouders.bem-szobor/net.topclouders.bem-szobor">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/net.topclouders.bem-szobor.web/target/classes"/>

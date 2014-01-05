@@ -2,8 +2,10 @@ package hu.topclouders.bemszobor.service;
 
 import hu.topclouders.bemszobor.dao.IActionDao;
 import hu.topclouders.bemszobor.domain.Action;
+import hu.topclouders.bemszobor.domain.Action.ActionValue;
 import hu.topclouders.bemszobor.domain.Demonstration;
 import hu.topclouders.bemszobor.domain.Visitor;
+import hu.topclouders.bemszobor.enums.ActionType;
 
 import java.util.Calendar;
 
@@ -23,18 +25,20 @@ public class ActionService {
 	@Autowired
 	private IActionDao actionRepository;
 
-	public Action createPlusAction(Demonstration demonstration, Visitor visitor) {
+	public Action createPlusAction(Demonstration demonstration, Visitor visitor, ActionType actionType) {
 		Assert.notNull(demonstration);
 		Assert.notNull(visitor);
+		Assert.notNull(actionType);
 
 		Action action = new Action(visitor);
 		action.setDemonstration(demonstration);
 		action.setDate(Calendar.getInstance().getTimeInMillis());
-		action.setValue(1);
+		action.setActionValue(ActionValue.DO);
+		action.setActionType(actionType);
 
 		actionRepository.save(action);
 
-		LOGGER.info(String.format(
+		LOGGER.debug(String.format(
 				"%s. Visitor %s action successfully created in the %s",
 				visitor.getId(), action.getActionType(),
 				demonstration.getName()));
@@ -42,16 +46,18 @@ public class ActionService {
 		return action;
 	}
 
-	public void createMinusAction(Demonstration demonstration, Visitor visitor) {
+	public void createMinusAction(Demonstration demonstration, Visitor visitor, ActionType actionType) {
 		Assert.notNull(demonstration);
 		Assert.notNull(visitor);
+		Assert.notNull(actionType);
 
 		Action action = new Action(visitor);
 		action.setDemonstration(demonstration);
 		action.setDate(Calendar.getInstance().getTimeInMillis());
-		action.setValue(-1);
+		action.setActionValue(ActionValue.UNDO);
+		action.setActionType(actionType);
 
-		LOGGER.info(String.format(
+		LOGGER.debug(String.format(
 				"%s. Visitor %s action successfully invalidated in the %s",
 				visitor.getId(), action.getActionType(),
 				demonstration.getName()));

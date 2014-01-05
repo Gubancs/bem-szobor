@@ -57,7 +57,7 @@ public class VisitorService {
 		LOGGER.info(String.format("New visitor created on %s demonstration",
 				demonstration.getName()));
 
-		actionService.createPlusAction(demonstration, visitor);
+		actionService.createPlusAction(demonstration, visitor, ActionType.VISITOR);
 
 		return visitor;
 	}
@@ -97,7 +97,7 @@ public class VisitorService {
 		Assert.notNull(demonstrationId);
 		visitor = visitorDao.findOne(visitor.getId());
 
-		actionService.createMinusAction(visitor.getDemonstration(), visitor);
+		actionService.createMinusAction(visitor.getDemonstration(), visitor, actionType);
 
 		Demonstration demonstration = demonstrationDao.findOne(demonstrationId);
 		if (demonstration == null) {
@@ -110,7 +110,7 @@ public class VisitorService {
 
 		visitor = visitorDao.save(visitor);
 
-		actionService.createPlusAction(demonstration, visitor);
+		actionService.createPlusAction(demonstration, visitor,actionType);
 
 		return visitorDao.save(visitor);
 	}

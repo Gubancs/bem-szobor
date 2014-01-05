@@ -26,7 +26,7 @@ public class DemonstrationDao extends AbstractJpaDao<Demonstration> implements
 		QAction qAction = QAction.action;
 		JPAQuery query = new JPAQuery(getEntityManager()).from(qAction);
 		return query
-				.where(qAction.actionType.eq(ActionType.JOIN).and(
+				.where(qAction.actionType.eq(ActionType.SIGN_UP).and(
 						isActiveDemonstration(qAction.demonstration, date)))
 				.groupBy(qAction.demonstration.id)
 				.orderBy(qAction.demonstration.start.desc(),
